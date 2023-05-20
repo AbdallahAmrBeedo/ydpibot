@@ -1,0 +1,11 @@
+wheel_base: 0.137
+wheel_radius: 0.0325
+
+max_speed: 255
+min_speed: -255
+
+max_vx: 0.5
+min_vx: -0.5
+
+max_wz: 1
+min_wz: -1

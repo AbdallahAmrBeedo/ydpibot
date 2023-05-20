@@ -1,0 +1,12 @@
+x: {
+  kp: 1,
+  ki: 0,
+  kd: 0,
+  windup: 0.1
+  }
+w: {
+  kp: 1,
+  ki: 0,
+  kd: 0,
+  windup: 0.1
+  }
