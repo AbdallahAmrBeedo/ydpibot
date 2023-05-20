@@ -9,6 +9,6 @@
         <param name="port" value="/dev/ttyACM0" />
     </node>
 
-    <include file="$(find ydlidar)/launch/lidar.launch" output="screen"/>
+    <include file="$(find ydlidar)/launch/lidar.launch"/>
 
 </launch>
