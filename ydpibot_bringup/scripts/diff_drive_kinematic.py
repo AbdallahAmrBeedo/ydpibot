@@ -313,4 +313,5 @@ class Node:
         self.motors.publish(self.motor_speeds)
 
 
-n = Node()
+if __name__ == "__main__":
+    Node()
