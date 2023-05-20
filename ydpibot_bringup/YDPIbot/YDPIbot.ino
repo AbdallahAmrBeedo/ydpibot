@@ -53,6 +53,14 @@ float accAngleX, accAngleY, gyroAngleX, gyroAngleY, gyroAngleZ;
 float roll, pitch, yaw;
 float AccErrorX, AccErrorY, GyroErrorX, GyroErrorY, GyroErrorZ;
 float elapsedTime, currentTime, previousTime;
+float alpha_gyro = 0.6;
+float alpha_accel = 0.8;
+float old_AccX = 0;
+float old_AccY = 0;
+float old_AccZ = 0;
+float old_GyroX = 0;
+float old_GyroY = 0;
+float old_GyroZ = 0;
 
 
 // motor driver library
@@ -132,9 +140,16 @@ void imu(){
   AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
   AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
   
-  AccX = AccX;// - error[0];
-  AccY = AccY;// - error[1];
-  AccZ = AccZ;
+  AccX = AccX - 0.2;// - error[0];
+  AccY = AccY + 0.95;// - error[1];
+  AccZ = AccZ + 0.04;
+
+  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
+  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
+  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
+  old_AccX = AccX;
+  old_AccY = AccY;
+  old_AccZ = AccZ;
   
   // Calculating Roll and Pitch from the accelerometer data
   accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI); //- 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
@@ -152,16 +167,23 @@ void imu(){
   GyroY = (Wire.read() << 8 | Wire.read()) / 131.0;
   GyroZ = (Wire.read() << 8 | Wire.read()) / 131.0;
   // Correct the outputs with the calculated error values
-  GyroX = GyroX;// - error[2]; // GyroErrorX ~(-0.56)
-  GyroY = GyroY;// - error[3]; // GyroErrorY ~(2)
-  GyroZ = GyroZ;// - error[4]; // GyroErrorZ ~ (-0.8)
+  GyroX = GyroX + 7.5;// - error[2]; // GyroErrorX ~(-0.56)
+  GyroY = GyroY + 0.1;// - error[3]; // GyroErrorY ~(2)
+  GyroZ = GyroZ + 0.05;// - error[4]; // GyroErrorZ ~ (-0.8)
 
+  GyroX = moving_average_filter(GyroX, old_GyroX, alpha_gyro);
+  GyroY = moving_average_filter(GyroY, old_GyroY, alpha_gyro);
+  GyroZ = moving_average_filter(GyroZ, old_GyroZ, alpha_gyro);
+  old_GyroX = GyroX;
+  old_GyroY = GyroY;
+  old_GyroZ = GyroZ;
+    
   gyroAngleX = gyroAngleX + GyroX * elapsedTime; // deg/s * s = deg
   gyroAngleY = gyroAngleY + GyroY * elapsedTime;
   yaw =  yaw + GyroZ * elapsedTime;
 
   roll = gyroAngleX;
-  pitch = gyroAngleY;
+  pitch = gyroAngleY * 0.9 + accAngleY * 0.1;
 
   imu_msg.orientation.x = roll;
   imu_msg.orientation.y = pitch;
@@ -181,3 +203,9 @@ void imu(){
 void odom(){
   
 }
+
+float moving_average_filter(float new_reading,float old_reading, float alpha){
+ float filtered_reading = alpha*new_reading + (1-alpha)*old_reading;
+ return filtered_reading;
+  
+  }
