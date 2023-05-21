@@ -279,6 +279,8 @@ class Node:
         self.motors = rospy.Publisher("/motor_speeds", Int16MultiArray, queue_size=10)
         self.motor_speeds = Int16MultiArray()
 
+        t.t_prev = time()
+
         rospy.Subscriber("/cmd_vel", Twist, self.cmdvelCb)
         rospy.Subscriber("/imu", Imu, self.imuCb)
         rospy.spin()
