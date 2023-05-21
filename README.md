@@ -2,12 +2,14 @@
 
 YDPIbot is an open platform differential drive mobile robot that uses a Raspberry Pi, an Arduino Mega, a YDLidar, a motor shield, an IMU, and encoders to perform autonomous navigation and mapping tasks. YDPIbot is an affordable and easy-to-assemble robot that is designed to be an educational tool for students and hobbyists who are interested in learning about robotics and autonomous systems.
 
+YDPIbot is an open platform differential drive mobile robot that performs autonomous navigation and mapping tasks. YDPIbot is an affordable and easy-to-assemble robot that is designed to be an educational tool for students to learn about robotics and autonomous systems.
+
 # Assembly
 
 To assemble YDPIbot, you will need the following components:
 
 - Raspberry Pi 3 model B+
-- YDLidar
+- YDLidar x4
 - Arduino Mega
 - Motor driver shield
 - IMU (MPU6050)
@@ -38,7 +40,7 @@ To use YDPIbot, you will need to install the following dependencies:
 - [ROS Noetic](http://wiki.ros.org/noetic/Installation) - the ubiquity robotics image have ROS noetic already-
 - [YDLidar pkg](https://github.com/PinkWink/ydlidar)
 
-## Installing Ubuntu20.04 on Raspberry PI
+### Installing Ubuntu20.04 on Raspberry PI
 
 We recommend installing Ubuntu 20.04 and ROS noetic on the Raspberry Pi using the Ubiquity Robotics image. Follow these steps to install Ubuntu 20.04 using the Ubiquity Robotics image:
 
@@ -50,7 +52,7 @@ We recommend installing Ubuntu 20.04 and ROS noetic on the Raspberry Pi using th
 
 4. Follow the on-screen instructions to complete the Ubuntu 20.04 installation process.
 
-## Installing YDlidar pkg
+### Installing YDlidar pkg
 
 To install the YDLidar pkg, follow these steps:
 
@@ -64,7 +66,7 @@ To install the YDLidar pkg, follow these steps:
 
 4. Run some demo with the lidar to check if it's working.
 
-## Installing YDPIbot pkg
+### Installing YDPIbot pkg
 
 To install the YDPIbot package, follow these steps:
 
@@ -79,3 +81,43 @@ To install the YDPIbot package, follow these steps:
 4. Navigate back to the main catkin_ws to build the pkg using the command:
 
     `catkin_make`
+
+### Uploading Arduino Code
+
+1. Open Arduino IDE and connect the arduino to your PC
+
+2. Choose from tools/boards Arduino Mega 2560 and choose the port (Usually **/dev/ttyACM0** if you are running from Ubuntu)
+
+3. Open the code in `~/catkin_ws/src/ydpibot/ydpibot_bringup/YDPIbot/YDPIbot.ino`
+
+4. Upload the code and connect the Arduino to the raspberry pi.
+
+## Usage
+
+-----------------------------------------------
+
+## Contributing
+
+We welcome contributions from other developers! If you would like to contribute to YDPIbot, please follow these guidelines:
+
+1. Fork the YDPIbot repository to your own GitHub account.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and test them thoroughly.
+4. Submit a pull request to the main YDPIbot repository with a clear description of your changes.
+
+## Credits
+
+YDPIbot was created by Abdallah Amr, Mostafa Osama, Tarek Shohdy, and Yomna Omar from Egypt-Japan University of Science andTechnology. We would like to acknowledge the following libraries and tools that were used in the development of this project:
+
+- [YDLidar SDK](https://www.ydlidar.com/products/view/5.html)
+- [Adafruit Motor Shield library](https://learn.adafruit.com/adafruit-motor-shield/library-install)
+- [Ubiquity Robotics Raspberry Pi Image](https://learn.ubiquityrobotics.comnoetic_pi_image_downloads)
+
+We would also like to thank the following people for their contributions to this project:
+
+- Abdallah Amr (abdallah.amr@ejust.edu.eg)
+- Mostafa Osama (mostafa.eshra@ejust.edu.eg)
+- Tarek Shohdy (tarek.shohdy@ejust.edu.eg)
+- Yomna Omar (yomna.mokhtar@ejust.edu.eg)
+
+If you have any questions or feedback about YDPIbot, please contact us at abdallah.amr@ejust.edu.eg. We would love to hear from you!
