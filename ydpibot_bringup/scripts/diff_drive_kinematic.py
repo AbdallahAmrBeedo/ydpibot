@@ -307,7 +307,7 @@ class Node:
         PARAM.kd_w = config['kd_w']
         return config
 
-    def set_pid_param_callback(self, config, level):
+    def set_robot_param_callback(self, config, level):
         """
         Dynamic reconfiguration of robot parameters to make the tuning much easier
         
