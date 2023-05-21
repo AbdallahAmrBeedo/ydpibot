@@ -159,6 +159,8 @@ class Measured:
 
     v_x = 0
     w_z = 0
+    ax_prev = 0
+    ax_current = 0
 
 
 @dataclasses.dataclass
@@ -365,10 +367,16 @@ class Node:
             imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
         """
         actual.w_z = imu.angular_velocity.y * math.pi / 180
+        actual.ax_current = imu.linear_acceleration.x
+
         t.t_current = time()
         t.delta_t = t.t_current - t.t_prev
-        actual.v_x += imu.linear_acceleration.x * t.delta_t
+
+        actual.v_x += (actual.ax_current + actual.ax_prev) * t.delta_t / 2
+        
         t.t_prev = t.t_current
+        actual.ax_prev = actual.ax_current
+        
         rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ... delta: {t.delta_t}")       
 
     def stopAll(self) -> None:

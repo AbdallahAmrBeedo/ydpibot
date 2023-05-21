@@ -140,7 +140,7 @@ void imu(){
   AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
   AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
   
-  AccX = AccX - 0.2;// - error[0];
+  AccX = AccX - 0.125;// - error[0];
   AccY = AccY + 0.95;// - error[1];
   AccZ = AccZ + 0.04;
 
