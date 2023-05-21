@@ -273,8 +273,8 @@ class Node:
         
         self.robot = Robot()
 
-        srvpid = Server(pidConfig, self.set_pid_param_callback)
-        srvrobot = Server(robotConfig, self.set_robot_param_callback)
+        srvpid = Server(pidConfig, self.set_pid_param_callback, "pid")
+        srvrobot = Server(robotConfig, self.set_robot_param_callback, "robot")
         
         self.motors = rospy.Publisher("/motor_speeds", Int16MultiArray, queue_size=10)
         self.motor_speeds = Int16MultiArray()
