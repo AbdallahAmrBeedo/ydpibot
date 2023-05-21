@@ -269,7 +269,7 @@ class Node:
         """Initialize node which subscribes to /cmd_vel topic and the /imu and publishes on the /motor_speeds topic"""
         rospy.init_node("diff_drive_kinematic")
 
-        # rospy.on_shutdown(self.stopAll)
+        rospy.on_shutdown(self.stopAll)
         
         self.robot = Robot()
 
@@ -278,6 +278,8 @@ class Node:
         
         self.motors = rospy.Publisher("/motor_speeds", Int16MultiArray, queue_size=10)
         self.motor_speeds = Int16MultiArray()
+
+        t.t_prev = time()
 
         rospy.Subscriber("/cmd_vel", Twist, self.cmdvelCb)
         rospy.Subscriber("/imu", Imu, self.imuCb)
@@ -367,11 +369,11 @@ class Node:
         t.delta_t = t.t_current - t.t_prev
         actual.v_x += imu.linear_acceleration.x * t.delta_t
         t.t_prev = t.t_current
-        rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ")       
+        rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ... delta: {t.delta_t}")       
 
     def stopAll(self) -> None:
         """Stop all motors publish zeros to the motors"""
-        self.motor_speeds.data = [0.0,0.0]
+        self.motor_speeds.data = [0, 0]
         self.motors.publish(self.motor_speeds)
 
 
