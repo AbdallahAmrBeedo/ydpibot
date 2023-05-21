@@ -48,11 +48,14 @@ Contributors:
 
 import dataclasses
 import rospy
+import math
+from time import time
+from typing import List
 from std_msgs.msg import Int16MultiArray
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
-from typing import List
-
+from dynamic_reconfigure.server import Server
+from ydpibot_bringup.cfg import pidConfig, robotConfig
 
 @dataclasses.dataclass
 class ErrorVal:
@@ -270,6 +273,9 @@ class Node:
         
         self.robot = Robot()
 
+        srvpid = Server(pidConfig, self.set_pid_param_callback)
+        srvrobot = Server(robotConfig, self.set_robot_param_callback)
+        
         self.motors = rospy.Publisher("/motor_speeds", Int16MultiArray, queue_size=10)
         self.motor_speeds = Int16MultiArray()
 
@@ -277,6 +283,54 @@ class Node:
         rospy.Subscriber("/imu", Imu, self.imuCb)
         rospy.spin()
     
+    def set_pid_param_callback(self, config, level):
+        """
+        Dynamic reconfiguration of PID parameters to make the tuning much easier
+        
+        Args:
+            config: the list of the paramter conigured with the new values coming from the server
+            level: indication if the values are not changed yet
+        """
+        if not level:
+            config['kp_x'] = PARAM.kp_x
+            config['ki_x'] = PARAM.ki_x
+            config['kd_x'] = PARAM.kd_x
+            config['kp_w'] = PARAM.kp_w
+            config['ki_w'] = PARAM.ki_w
+            config['kd_w'] = PARAM.kd_w
+            return config
+        PARAM.kp_x = config['kp_x']
+        PARAM.ki_x = config['ki_x']
+        PARAM.kd_x = config['kd_x']
+        PARAM.kp_w = config['kp_w']
+        PARAM.ki_w = config['ki_w']
+        PARAM.kd_w = config['kd_w']
+        return config
+
+    def set_pid_param_callback(self, config, level):
+        """
+        Dynamic reconfiguration of robot parameters to make the tuning much easier
+        
+        Args:
+            config: the list of the paramter conigured with the new values coming from the server
+            level: indication if the values are not changed yet
+        """
+        if not level:
+            config['max_speed'] = PARAM.max_speed
+            config['min_speed'] = PARAM.min_speed
+            config['max_vx'] = PARAM.max_vx
+            config['min_vx'] = PARAM.min_vx
+            config['max_wz'] = PARAM.max_wz
+            config['min_wz'] = PARAM.min_wz
+            return config
+        PARAM.max_speed = config['max_speed']
+        PARAM.min_speed = config['min_speed']
+        PARAM.max_vx =  config['max_vx']
+        PARAM.min_vx = config['min_vx']
+        PARAM.max_wz = config['max_wz']
+        PARAM.min_wz = config['min_wz']
+        return config
+
     def cmdvelCb(self,cmd) -> None:
         """
         Callback of the subiscribed topic /cmd_vel to publish motor speeds
@@ -303,9 +357,17 @@ class Node:
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
 
 
-
     def imuCb(self,imu) -> None:
-        pass
+        """recieves the imu readings from the MPU6050
+        Args:
+            imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
+        """
+        actual.w_z = imu.angular_velocity.y * math.pi / 180
+        t.t_current = time()
+        t.delta_t = t.t_current - t.t_prev
+        actual.v_x += imu.linear_acceleration.x * t.delta_t
+        t.t_prev = t.t_current
+        rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ")       
 
     def stopAll(self) -> None:
         """Stop all motors publish zeros to the motors"""
