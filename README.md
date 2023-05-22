@@ -2,8 +2,6 @@
 
 YDPIbot is an open platform differential drive mobile robot that uses a Raspberry Pi, an Arduino Mega, a YDLidar, a motor shield, an IMU, and encoders to perform autonomous navigation and mapping tasks. YDPIbot is an affordable and easy-to-assemble robot that is designed to be an educational tool for students and hobbyists who are interested in learning about robotics and autonomous systems.
 
-YDPIbot is an open platform differential drive mobile robot that performs autonomous navigation and mapping tasks. YDPIbot is an affordable and easy-to-assemble robot that is designed to be an educational tool for students to learn about robotics and autonomous systems.
-
 # Assembly
 
 To assemble YDPIbot, you will need the following components:
