@@ -8,6 +8,7 @@ To assemble YDPIbot, you will need the following components:
 
 - Raspberry Pi 3 model B+
 - YDLidar x4
+<img src="img/ydlidar.jpg" alt="ydlidar X4" width="150" align="right" caption="ydlidar"/>
 - Arduino Mega
 - Motor driver shield
 - IMU (MPU6050)

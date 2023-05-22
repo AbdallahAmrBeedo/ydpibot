@@ -4,8 +4,9 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="ydpibot_describtion">
-  <link
-    name="base_link">
+  <link name="dummy">
+   </link>
+  <link name="base_link">
     <inertial>
       <origin
         xyz="0.093495 -0.17099 0.094111"
@@ -13,12 +14,12 @@
       <mass
         value="0.11353" />
       <inertia
-        ixx="0.0002007"
-        ixy="-4.518E-19"
-        ixz="-9.7266E-06"
-        iyy="0.00030078"
-        iyz="1.2181E-20"
-        izz="0.00047883" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -31,7 +32,7 @@
       <material
         name="">
         <color
-          rgba="255 165 0 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -44,6 +45,10 @@
       </geometry>
     </collision>
   </link>
+  <joint name="dummy_joint" type="fixed">
+     <parent link="dummy"/>
+     <child link="base_link"/>
+   </joint>
   <link
     name="Base_upper">
     <inertial>
@@ -71,7 +76,7 @@
       <material
         name="">
         <color
-          rgba="255 165 0 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -124,7 +129,7 @@
       <material
         name="">
         <color
-          rgba="255 100 0 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -177,7 +182,7 @@
       <material
         name="">
         <color
-          rgba="255 100 0 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -230,7 +235,7 @@
       <material
         name="">
         <color
-          rgba="255 100 0 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -283,7 +288,7 @@
       <material
         name="">
         <color
-          rgba="255 100 0 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -336,7 +341,7 @@
       <material
         name="">
         <color
-          rgba="0 0 255 1" />
+          rgba="0 0 1 1" />
       </material>
     </visual>
     <collision>
@@ -389,7 +394,7 @@
       <material
         name="">
         <color
-          rgba="0 255 0 1" />
+          rgba="0 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -442,7 +447,7 @@
       <material
         name="">
         <color
-          rgba="0 255 0 1" />
+          rgba="0 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -495,7 +500,7 @@
       <material
         name="">
         <color
-          rgba="200 200 100 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -548,7 +553,7 @@
       <material
         name="">
         <color
-          rgba="100 200 200 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -601,7 +606,7 @@
       <material
         name="">
         <color
-          rgba="200 100 200 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
