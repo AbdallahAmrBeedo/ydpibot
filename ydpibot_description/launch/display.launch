@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="model" default="$(find ydpibot_describtion)/urdf/ydpibot.urdf"/>
+  <arg name="model" default="$(find ydpibot_description)/urdf/ydpibot_description.urdf"/>
   <arg name="gui" default="true" />
   
   <param name="robot_description" command="rosrun xacro xacro $(arg model)" />
@@ -12,5 +12,5 @@
   
   <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> 
   
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mobile_robot_autonomous_navigation)/config/rviz_config.rviz"/> 
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ydpibot_description)/urdf/rviz_config.rviz"/> 
 </launch>

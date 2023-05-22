@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-project(ydpibot_describtion)
+project(ydpibot_description)
 
 find_package(catkin REQUIRED)
 

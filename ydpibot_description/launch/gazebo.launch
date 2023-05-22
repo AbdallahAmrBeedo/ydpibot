@@ -10,7 +10,7 @@
     name="spawn_model"
     pkg="gazebo_ros"
     type="spawn_model"
-    args="-file $(find ydpibot_describtion)/urdf/ydpibot.urdf -urdf -model ydpibot"
+    args="-file $(find ydpibot_description)/urdf/ydpibot_description.urdf -urdf -model ydpibot_description"
     output="screen" />
   <node
     name="fake_joint_calibration"
