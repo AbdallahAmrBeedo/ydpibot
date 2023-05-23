@@ -136,20 +136,20 @@ void imu(){
   Wire.endTransmission(false);
   Wire.requestFrom(MPU, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
   //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
-  AccX = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
+  AccX = (Wire.read() << 8 | Wire.read()) / 1000;// / 16384.0; // X-axis value
   AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
   AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
   
-  AccX = AccX - 0.125;// - error[0];
+  AccX = AccX - 2.;// - error[0];
   AccY = AccY + 0.95;// - error[1];
   AccZ = AccZ + 0.04;
 
-  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
-  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
-  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
-  old_AccX = AccX;
-  old_AccY = AccY;
-  old_AccZ = AccZ;
+//  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
+//  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
+//  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
+//  old_AccX = AccX;
+//  old_AccY = AccY;
+//  old_AccZ = AccZ;
   
   // Calculating Roll and Pitch from the accelerometer data
   accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI); //- 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details

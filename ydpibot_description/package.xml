@@ -2,9 +2,9 @@
   <name>ydpibot_description</name>
   <version>1.0.0</version>
   <description>
-    <p>URDF Description package for ydpibot</p>
+    <p>URDF Description package for ydpibot_description</p>
     <p>This package contains configuration data, 3D models and launch files
-for ydpibot robot</p>
+for ydpibot_description robot</p>
   </description>
   <author>TODO</author>
   <maintainer email="TODO@email.com" />
