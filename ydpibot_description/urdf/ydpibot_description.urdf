@@ -8,7 +8,7 @@
     name="base_link">
     <inertial>
       <origin
-        xyz="0.093495 -0.17099 0.094111"
+        xyz="-0.0093884 -8.3267E-17 0.047189"
         rpy="0 0 0" />
       <mass
         value="0.11353" />
@@ -31,7 +31,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 0 0 1" />
       </material>
     </visual>
     <collision>
@@ -45,20 +45,20 @@
     </collision>
   </link>
   <link
-    name="Base_upper">
+    name="Upper_base">
     <inertial>
       <origin
-        xyz="-0.00023228 0.0015 2.7756E-17"
+        xyz="-0.00023228 -5.5511E-17 0.0015"
         rpy="0 0 0" />
       <mass
         value="0.072243" />
       <inertia
         ixx="7.9419E-05"
-        ixy="7.2895E-21"
-        ixz="2.2927E-19"
-        iyy="0.00035752"
-        iyz="-3.7269E-21"
-        izz="0.00027821" />
+        ixy="-2.5265E-19"
+        ixz="1.9615E-20"
+        iyy="0.00027821"
+        iyz="3.6365E-21"
+        izz="0.00035752" />
     </inertial>
     <visual>
       <origin
@@ -66,12 +66,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Base_upper.STL" />
+          filename="package://ydpibot_description/meshes/Upper_base.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 0 0 1" />
       </material>
     </visual>
     <collision>
@@ -80,20 +80,20 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Base_upper.STL" />
+          filename="package://ydpibot_description/meshes/Upper_base.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="Base_upper_joint"
+    name="Upper_base"
     type="fixed">
     <origin
-      xyz="0.10092 -0.17099 0.13642"
-      rpy="1.5708 0 0" />
+      xyz="-0.0019675 0 0.0895"
+      rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
-      link="Base_upper" />
+      link="Upper_base" />
     <axis
       xyz="0 0 0" />
   </joint>
@@ -101,17 +101,17 @@
     name="spacer1">
     <inertial>
       <origin
-        xyz="8.3267E-17 -0.017 -2.7756E-17"
+        xyz="-2.7756E-17 -9.7145E-17 -0.017"
         rpy="0 0 0" />
       <mass
         value="0.0038202" />
       <inertia
         ixx="7.5881E-07"
-        ixy="4.9502E-23"
-        ixz="0"
-        iyy="5.1484E-08"
-        iyz="-2.6834E-23"
-        izz="7.5881E-07" />
+        ixy="-1.672E-24"
+        ixz="3.7903E-23"
+        iyy="7.5881E-07"
+        iyz="4.1639E-23"
+        izz="5.1484E-08" />
     </inertial>
     <visual>
       <origin
@@ -124,7 +124,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="0 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -141,30 +141,30 @@
     name="spacer1_joint"
     type="continuous">
     <origin
-      xyz="0.084615 0 -0.055"
-      rpy="0 0.33559 0" />
+      xyz="0.084615 0.055 0"
+      rpy="0 0 0" />
     <parent
-      link="Base_upper" />
+      link="Upper_base" />
     <child
       link="spacer1" />
     <axis
-      xyz="0 1 0" />
+      xyz="0 0 1" />
   </joint>
   <link
     name="spacer2">
     <inertial>
       <origin
-        xyz="1.38777878078145E-16 -0.017 5.55111512312578E-17"
+        xyz="-8.3267E-17 -8.3267E-17 -0.017"
         rpy="0 0 0" />
       <mass
-        value="0.00382017666676519" />
+        value="0.0038202" />
       <inertia
-        ixx="7.58805628782363E-07"
-        ixy="3.39136695613013E-23"
-        ixz="0"
-        iyy="5.14844204070296E-08"
-        iyz="-2.25982421294763E-23"
-        izz="7.58805628782363E-07" />
+        ixx="7.5881E-07"
+        ixy="-3.5E-24"
+        ixz="3.2864E-21"
+        iyy="7.5881E-07"
+        iyz="3.2535E-23"
+        izz="5.1484E-08" />
     </inertial>
     <visual>
       <origin
@@ -177,7 +177,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -194,30 +194,30 @@
     name="spacer2_joint"
     type="continuous">
     <origin
-      xyz="0.084615 0 0.055"
-      rpy="0 0.33674 0" />
+      xyz="0.0846153846153847 -0.0549999999999999 0"
+      rpy="0 0 0" />
     <parent
-      link="Base_upper" />
+      link="Upper_base" />
     <child
       link="spacer2" />
     <axis
-      xyz="0 1 0" />
+      xyz="0 0 1" />
   </joint>
   <link
     name="spacer3">
     <inertial>
       <origin
-        xyz="0 -0.017 0"
+        xyz="-7.6328E-17 8.3267E-17 -0.017"
         rpy="0 0 0" />
       <mass
-        value="0.00382017666676519" />
+        value="0.0038202" />
       <inertia
-        ixx="7.58805628782362E-07"
-        ixy="2.32527400477112E-23"
-        ixz="0"
-        iyy="5.14844204070295E-08"
-        iyz="-1.73055673955825E-23"
-        izz="7.58805628782362E-07" />
+        ixx="7.5881E-07"
+        ixy="-9.9272E-25"
+        ixz="3.3078E-21"
+        iyy="7.5881E-07"
+        iyz="1.6292E-26"
+        izz="5.1484E-08" />
     </inertial>
     <visual>
       <origin
@@ -230,7 +230,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -244,33 +244,33 @@
     </collision>
   </link>
   <joint
-    name="spacer3_joint"
+    name="spacer3_joiint"
     type="continuous">
     <origin
-      xyz="-0.084615 0 -0.055"
-      rpy="0 0.33674 0" />
+      xyz="-0.0846153846153847 -0.0549999999999999 0"
+      rpy="0 0 0" />
     <parent
-      link="Base_upper" />
+      link="Upper_base" />
     <child
       link="spacer3" />
     <axis
-      xyz="0 1 0" />
+      xyz="0 0 1" />
   </joint>
   <link
     name="spacer4">
     <inertial>
       <origin
-        xyz="-2.42861286636753E-17 -0.017 2.77555756156289E-17"
+        xyz="-6.9389E-18 2.7756E-17 -0.017"
         rpy="0 0 0" />
       <mass
-        value="0.00382017666676519" />
+        value="0.0038202" />
       <inertia
-        ixx="7.58805628782362E-07"
-        ixy="1.43016865199273E-23"
-        ixz="0"
-        iyy="5.14844204070296E-08"
-        iyz="3.29398282473415E-24"
-        izz="7.58805628782362E-07" />
+        ixx="7.5881E-07"
+        ixy="-1.1602E-24"
+        ixz="3.3017E-21"
+        iyy="7.5881E-07"
+        iyz="3.9363E-23"
+        izz="5.1484E-08" />
     </inertial>
     <visual>
       <origin
@@ -283,7 +283,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -300,136 +300,83 @@
     name="spacer4_joint"
     type="continuous">
     <origin
-      xyz="-0.084615 0 0.055"
-      rpy="0 0.14715 0" />
+      xyz="-0.0846153846153847 0.055 0"
+      rpy="0 0 0" />
     <parent
-      link="Base_upper" />
+      link="Upper_base" />
     <child
       link="spacer4" />
-    <axis
-      xyz="0 1 0" />
-  </joint>
-  <link
-    name="Lidar">
-    <inertial>
-      <origin
-        xyz="-0.0100120175365926 -1.88737914186277E-15 -0.0157829888269581"
-        rpy="0 0 0" />
-      <mass
-        value="0.0321236105023131" />
-      <inertia
-        ixx="6.04209032356703E-06"
-        ixy="-8.51996030929602E-20"
-        ixz="1.1886074166174E-21"
-        iyy="1.77158746829917E-05"
-        iyz="2.16870748621142E-21"
-        izz="2.11948956350748E-05" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://ydpibot_description/meshes/Lidar.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://ydpibot_description/meshes/Lidar.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="Lidar_joint"
-    type="fixed">
-    <origin
-      xyz="-0.039725 0.04948 0"
-      rpy="1.5708 0 -3.1416" />
-    <parent
-      link="Base_upper" />
-    <child
-      link="Lidar" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
-  <link
-    name="Wheel1">
-    <inertial>
-      <origin
-        xyz="0 -1.38777878078145E-17 0.0125"
-        rpy="0 0 0" />
-      <mass
-        value="0.075103699374881" />
-      <inertia
-        ixx="2.56213141096599E-05"
-        ixy="-2.99951956532367E-39"
-        ixz="-4.41162993361618E-23"
-        iyy="2.56213141096599E-05"
-        iyz="-7.12930731372928E-38"
-        izz="4.34193262011031E-05" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://ydpibot_description/meshes/Wheel1.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://ydpibot_description/meshes/Wheel1.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="Wheel1_joint"
-    type="continuous">
-    <origin
-      xyz="0.080916 -0.090994 0.079422"
-      rpy="1.5708 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="Wheel1" />
     <axis
       xyz="0 0 1" />
   </joint>
   <link
-    name="Wheel2">
+    name="base_scan">
     <inertial>
       <origin
-        xyz="0 0 0.0125"
+        xyz="0.010012 8.6042E-16 -0.015783"
+        rpy="0 0 0" />
+      <mass
+        value="0.032124" />
+      <inertia
+        ixx="6.0421E-06"
+        ixy="-8.5949E-20"
+        ixz="-2.1245E-19"
+        iyy="1.7716E-05"
+        iyz="3.464E-20"
+        izz="2.1195E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ydpibot_description/meshes/base_scan.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ydpibot_description/meshes/base_scan.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_scan_joint"
+    type="fixed">
+    <origin
+      xyz="-0.0397250065539057 0 0.049480432620002"
+      rpy="0 0 0" />
+    <parent
+      link="Upper_base" />
+    <child
+      link="base_scan" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_wheel">
+    <inertial>
+      <origin
+        xyz="-4.5103E-16 -0.0125 5.0654E-16"
         rpy="0 0 0" />
       <mass
         value="0.075104" />
       <inertia
         ixx="2.5621E-05"
-        ixy="-2.9995E-39"
-        ixz="-5.4594E-37"
-        iyy="2.5621E-05"
-        iyz="-7.1293E-38"
-        izz="4.3419E-05" />
+        ixy="-2.035E-39"
+        ixz="-2.9995E-39"
+        iyy="4.3419E-05"
+        iyz="7.1293E-38"
+        izz="2.5621E-05" />
     </inertial>
     <visual>
       <origin
@@ -437,12 +384,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Wheel2.STL" />
+          filename="package://ydpibot_description/meshes/right_wheel.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -451,38 +398,38 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Wheel2.STL" />
+          filename="package://ydpibot_description/meshes/right_wheel.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="Wheel2_joint"
+    name="right_wheel_joint"
     type="continuous">
     <origin
-      xyz="0.080916 -0.22599 0.079422"
-      rpy="1.5708 0 0" />
+      xyz="-0.021967 -0.055 0.0325"
+      rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
-      link="Wheel2" />
+      link="right_wheel" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 -1 0" />
   </joint>
   <link
-    name="Caster Wheel Base">
+    name="left_wheel">
     <inertial>
       <origin
-        xyz="0.017052 0.003709 -0.0125"
+        xyz="-4.7184E-16 -0.0125 4.7184E-16"
         rpy="0 0 0" />
       <mass
-        value="0.044833" />
+        value="0.075104" />
       <inertia
-        ixx="4.8267E-06"
-        ixy="-1.3671E-23"
-        ixz="-5.1509E-22"
-        iyy="9.3882E-06"
-        iyz="-4.8576E-22"
-        izz="4.8267E-06" />
+        ixx="2.5621E-05"
+        ixy="-3.0526E-38"
+        ixz="-2.9995E-39"
+        iyy="4.3419E-05"
+        iyz="7.1293E-38"
+        izz="2.5621E-05" />
     </inertial>
     <visual>
       <origin
@@ -490,12 +437,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Caster Wheel Base.STL" />
+          filename="package://ydpibot_description/meshes/left_wheel.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.52941 0.54902 0.54902 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -504,38 +451,91 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Caster Wheel Base.STL" />
+          filename="package://ydpibot_description/meshes/left_wheel.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="Caster Wheel Base_joint"
-    type="fixed">
+    name="left_wheel_joint"
+    type="continuous">
     <origin
-      xyz="0.15791 -0.18349 0.093422"
-      rpy="1.5708 0 0" />
+      xyz="-0.021967 0.08 0.0325"
+      rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
-      link="Caster Wheel Base" />
+      link="left_wheel" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="caster_wheel_base">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ydpibot_description/meshes/caster_wheel_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ydpibot_description/meshes/caster_wheel_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="caster_wheel_base_joint"
+    type="fixed">
+    <origin
+      xyz="0.0550228988474612 -0.0125000000000001 0.0464999999999998"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="caster_wheel_base" />
     <axis
       xyz="0 0 0" />
   </joint>
   <link
-    name="Caster Wheel cage">
+    name="caster_wheel_cage">
     <inertial>
       <origin
-        xyz="0.019414 -0.0053453 -0.0125"
+        xyz="0.021711 0.0078586 -0.0053453"
         rpy="0 0 0" />
       <mass
         value="0.056621" />
       <inertia
-        ixx="7.5423E-06"
-        ixy="8.202E-07"
-        ixz="9.6169E-12"
-        iyy="1.077E-05"
-        iyz="-4.6142E-11"
-        izz="8.0977E-06" />
+        ixx="7.5699E-06"
+        ixy="1.2066E-07"
+        ixz="7.9958E-07"
+        iyy="8.0701E-06"
+        iyz="-1.8276E-07"
+        izz="1.077E-05" />
     </inertial>
     <visual>
       <origin
@@ -543,12 +543,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Caster Wheel cage.STL" />
+          filename="package://ydpibot_description/meshes/caster_wheel_cage.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.52941 0.54902 0.54902 1" />
+          rgba="0 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -557,38 +557,38 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Caster Wheel cage.STL" />
+          filename="package://ydpibot_description/meshes/caster_wheel_cage.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="Caster Wheel cage_joint"
+    name="caster_wheel_cage_joint"
     type="fixed">
     <origin
-      xyz="0.0037189 -0.004 0.0039088"
-      rpy="0 0.25588 0" />
+      xyz="-0.00235708009540958 0.00411504444057814 -0.00400000000000002"
+      rpy="0 0 0" />
     <parent
-      link="Caster Wheel Base" />
+      link="caster_wheel_base" />
     <child
-      link="Caster Wheel cage" />
+      link="caster_wheel_cage" />
     <axis
       xyz="0 0 0" />
   </joint>
   <link
-    name="Caster Wheel">
+    name="caster_wheel">
     <inertial>
       <origin
-        xyz="0 0 0"
+        xyz="2.7756E-17 -2.7756E-17 3.4694E-18"
         rpy="0 0 0" />
       <mass
         value="0.017472" />
       <inertia
-        ixx="2.2415E-06"
-        ixy="1.0257E-22"
-        ixz="-6.0219E-22"
-        iyy="2.2415E-06"
-        iyz="-1.5882E-21"
-        izz="3.5831E-06" />
+        ixx="2.3081E-06"
+        ixy="2.9149E-07"
+        ixz="-1.6066E-22"
+        iyy="3.5164E-06"
+        iyz="-9.113E-22"
+        izz="2.2415E-06" />
     </inertial>
     <visual>
       <origin
@@ -596,12 +596,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Caster Wheel.STL" />
+          filename="package://ydpibot_description/meshes/caster_wheel.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.25098 0.25098 0.25098 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -610,73 +610,20 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ydpibot_description/meshes/Caster Wheel.STL" />
+          filename="package://ydpibot_description/meshes/caster_wheel.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="Caster Wheel_joint"
+    name="caster_wheel_joint"
     type="fixed">
     <origin
-      xyz="0.033052 -0.023 -0.0125"
-      rpy="0 0 1.7635" />
+      xyz="0.0350067859440261 0.00481885237829768 -0.0229999999999999"
+      rpy="0 0 0" />
     <parent
-      link="Caster Wheel cage" />
+      link="caster_wheel_cage" />
     <child
-      link="Caster Wheel" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
-  <link
-    name="Lower_Base">
-    <inertial>
-      <origin
-        xyz="-0.007421 -0.0053109 2.7756E-17"
-        rpy="0 0 0" />
-      <mass
-        value="0.11353" />
-      <inertia
-        ixx="0.0002007"
-        ixy="-9.7266E-06"
-        ixz="4.5268E-19"
-        iyy="0.00047883"
-        iyz="-8.8669E-22"
-        izz="0.00030078" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://ydpibot_description/meshes/Lower_Base.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://ydpibot_description/meshes/Lower_Base.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="Lower_Base_joint"
-    type="fixed">
-    <origin
-      xyz="0.10092 -0.17099 0.099422"
-      rpy="1.5708 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="Lower_Base" />
+      link="caster_wheel" />
     <axis
       xyz="0 0 0" />
   </joint>

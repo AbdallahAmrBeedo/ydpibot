@@ -1,1 +1,1 @@
-controller_joint_names: ['', 'spacer1_joint', 'spacer2_joint', 'spacer3_joint', 'spacer4_joint', 'Wheel1_joint', 'Wheel2_joint', ]
+controller_joint_names: ['', 'spacer1_joint', 'spacer2_joint', 'spacer3_joiint', 'spacer4_joint', 'right_wheel_joint', 'left_wheel_joint', ]
