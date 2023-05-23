@@ -413,8 +413,18 @@
     <child
       link="right_wheel" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 1 0" />
   </joint>
+    <transmission name="right_wheel_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
+    </joint>
+    <actuator name="right_wheel_actuator">
+      <mechanicalReduction>7</mechanicalReduction>
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
   <link
     name="left_wheel">
     <inertial>
@@ -466,8 +476,18 @@
     <child
       link="left_wheel" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 1 0" />
   </joint>
+    <transmission name="left_wheel_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_wheel_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>  
+    </joint>
+    <actuator name="left_wheel_actuator">
+      <mechanicalReduction>7</mechanicalReduction>
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
   <link
     name="caster_wheel_base">
     <inertial>
@@ -627,4 +647,11 @@
     <axis
       xyz="0 0 0" />
   </joint>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+    </plugin>
+  </gazebo>
+
 </robot>

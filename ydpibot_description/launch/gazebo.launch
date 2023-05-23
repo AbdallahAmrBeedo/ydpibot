@@ -1,20 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <include
-    file="$(find gazebo_ros)/launch/empty_world.launch" />
+  <remap from="/mobile_base_controller/cmd_vel" to="/cmd_vel"/>
+  <remap from="/mobile_base_controller/odom" to="/odom"/>
+  <arg name="gui" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find ydpibot_description)/urdf/ydpibot_world"/> -->
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+  
+   
   <node
     name="tf_footprint_base"
     pkg="tf"
     type="static_transform_publisher"
     args="0 0 0 0 0 0 base_link base_footprint 40" />
-  <node
-    name="spawn_model"
-    pkg="gazebo_ros"
-    type="spawn_model"
-    args="-file $(find ydpibot_description)/urdf/ydpibot_description.urdf -urdf -model ydpibot_description"
-    output="screen" />
-  <node
-    name="fake_joint_calibration"
-    pkg="rostopic"
-    type="rostopic"
-    args="pub /calibrated std_msgs/Bool true" />
+<param name="robot_description" command="cat '$(find ydpibot_description)/urdf/ydpibot_description.urdf'" />
+    
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0"/>
+    
+    <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param robot_description -model mybot -x $(arg x) -y $(arg y) -z $(arg z)" />
+
+    <rosparam file="$(find ydpibot_description)/config/ydpibot_drive.yaml" command="load" />
+
+    <node name="controller_manager" pkg="controller_manager" type="spawner"
+          respawn="false" output="screen" args="mobile_base_controller" />
+
+
 </launch>

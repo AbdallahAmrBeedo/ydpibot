@@ -1,0 +1,769 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='ydpibot_description'>
+      <link name='base_link'>
+        <inertial>
+          <pose>0.011989 -0.000315 0.062788 0 -0 0</pose>
+          <mass>0.29199</mass>
+          <inertia>
+            <ixx>0.000367846</ixx>
+            <ixy>6.98711e-06</ixy>
+            <ixz>0.000224395</ixz>
+            <iyy>0.00102796</iyy>
+            <iyz>-3.64386e-06</iyz>
+            <izz>0.000840085</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/base_link.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__Upper_base_collision_1'>
+          <pose>-0.001968 0 0.0895 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/Upper_base.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__base_scan_collision_2'>
+          <pose>-0.041693 0 0.13898 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/base_scan.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__caster_wheel_base_collision_3'>
+          <pose>0.055023 -0.0125 0.0465 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/caster_wheel_base.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__caster_wheel_cage_collision_4'>
+          <pose>0.052666 -0.008385 0.0425 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/caster_wheel_cage.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__caster_wheel_collision_5'>
+          <pose>0.087673 -0.003566 0.0195 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/caster_wheel.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='base_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/base_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__Upper_base_visual_1'>
+          <pose>-0.001968 0 0.0895 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/Upper_base.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__base_scan_visual_2'>
+          <pose>-0.041693 0 0.13898 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/base_scan.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__caster_wheel_base_visual_3'>
+          <pose>0.055023 -0.0125 0.0465 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/caster_wheel_base.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__caster_wheel_cage_visual_4'>
+          <pose>0.052666 -0.008385 0.0425 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/caster_wheel_cage.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__caster_wheel_visual_5'>
+          <pose>0.087673 -0.003566 0.0195 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/caster_wheel.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='spacer1_joint' type='revolute'>
+        <pose relative_to='base_link'>0.082648 0.055 0.0895 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>spacer1</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='spacer1'>
+        <pose relative_to='spacer1_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0 -0 -0.017 0 -0 0</pose>
+          <mass>0.0038202</mass>
+          <inertia>
+            <ixx>7.5881e-07</ixx>
+            <ixy>-1.672e-24</ixy>
+            <ixz>3.7903e-23</ixz>
+            <iyy>7.5881e-07</iyy>
+            <iyz>4.1639e-23</iyz>
+            <izz>5.1484e-08</izz>
+          </inertia>
+        </inertial>
+        <collision name='spacer1_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer1.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='spacer1_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer1.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='spacer2_joint' type='revolute'>
+        <pose relative_to='base_link'>0.082648 -0.055 0.0895 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>spacer2</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='spacer2'>
+        <pose relative_to='spacer2_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0 -0 -0.017 0 -0 0</pose>
+          <mass>0.0038202</mass>
+          <inertia>
+            <ixx>7.5881e-07</ixx>
+            <ixy>-3.5e-24</ixy>
+            <ixz>3.2864e-21</ixz>
+            <iyy>7.5881e-07</iyy>
+            <iyz>3.2535e-23</iyz>
+            <izz>5.1484e-08</izz>
+          </inertia>
+        </inertial>
+        <collision name='spacer2_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer2.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='spacer2_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer2.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='spacer3_joiint' type='revolute'>
+        <pose relative_to='base_link'>-0.086583 -0.055 0.0895 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>spacer3</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='spacer3'>
+        <pose relative_to='spacer3_joiint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0 0 -0.017 0 -0 0</pose>
+          <mass>0.0038202</mass>
+          <inertia>
+            <ixx>7.5881e-07</ixx>
+            <ixy>-9.9272e-25</ixy>
+            <ixz>3.3078e-21</ixz>
+            <iyy>7.5881e-07</iyy>
+            <iyz>1.6292e-26</iyz>
+            <izz>5.1484e-08</izz>
+          </inertia>
+        </inertial>
+        <collision name='spacer3_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer3.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='spacer3_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer3.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='spacer4_joint' type='revolute'>
+        <pose relative_to='base_link'>-0.086583 0.055 0.0895 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>spacer4</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='spacer4'>
+        <pose relative_to='spacer4_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0 0 -0.017 0 -0 0</pose>
+          <mass>0.0038202</mass>
+          <inertia>
+            <ixx>7.5881e-07</ixx>
+            <ixy>-1.1602e-24</ixy>
+            <ixz>3.3017e-21</ixz>
+            <iyy>7.5881e-07</iyy>
+            <iyz>3.9363e-23</iyz>
+            <izz>5.1484e-08</izz>
+          </inertia>
+        </inertial>
+        <collision name='spacer4_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer4.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='spacer4_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/spacer4.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='left_wheel_joint' type='revolute'>
+        <pose relative_to='base_link'>-0.021967 0.08 0.0325 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>left_wheel</child>
+        <axis>
+          <xyz>0 -1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='left_wheel'>
+        <pose relative_to='left_wheel_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0 -0.0125 0 0 -0 0</pose>
+          <mass>0.075104</mass>
+          <inertia>
+            <ixx>2.5621e-05</ixx>
+            <ixy>-3.0526e-38</ixy>
+            <ixz>-2.9995e-39</ixz>
+            <iyy>4.3419e-05</iyy>
+            <iyz>7.1293e-38</iyz>
+            <izz>2.5621e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='left_wheel_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/left_wheel.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='left_wheel_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/left_wheel.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='right_wheel_joint' type='revolute'>
+        <pose relative_to='base_link'>-0.021967 -0.055 0.0325 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>right_wheel</child>
+        <axis>
+          <xyz>0 -1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='right_wheel'>
+        <pose relative_to='right_wheel_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0 -0.0125 0 0 -0 0</pose>
+          <mass>0.075104</mass>
+          <inertia>
+            <ixx>2.5621e-05</ixx>
+            <ixy>-2.035e-39</ixy>
+            <ixz>-2.9995e-39</ixz>
+            <iyy>4.3419e-05</iyy>
+            <iyz>7.1293e-38</iyz>
+            <izz>2.5621e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='right_wheel_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/right_wheel.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='right_wheel_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/beedo/catkin_workspace/src/ydpibot/ydpibot_description/meshes/right_wheel.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>408 901000000</sim_time>
+      <real_time>410 782213702</real_time>
+      <wall_time>1684847574 717661277</wall_time>
+      <iterations>408901</iterations>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ydpibot_description'>
+        <pose>-0.627123 0.024073 -0.000157 0.000175 0.00386 -0.188372</pose>
+        <scale>1 1 1</scale>
+        <link name='base_link'>
+          <pose>-0.627123 0.024073 -0.000157 0.000175 0.00386 -0.188372</pose>
+          <velocity>5.3e-05 0.000346 -0.003144 -0.004095 -0.034875 -0.003913</velocity>
+          <acceleration>-2.47001 0.371088 -5.50819 -2.20286 -0.673326 1.98056</acceleration>
+          <wrench>-0.721218 0.108354 -1.60834 0 -0 0</wrench>
+        </link>
+        <link name='left_wheel'>
+          <pose>-0.633598 0.106742 0.032441 0.000165 -0.35325 -0.188427</pose>
+          <velocity>-0.000762 0.000564 -0.003686 0.004634 -0.015963 -0.004467</velocity>
+          <acceleration>-0.450883 0.233226 -7.61529 0.041054 1.07911 -2.87938</acceleration>
+          <wrench>-0.033863 0.017516 -0.571939 0 -0 0</wrench>
+        </link>
+        <link name='right_wheel'>
+          <pose>-0.658878 -0.02587 0.032418 0.000397 -1.16899 -0.188736</pose>
+          <velocity>-0.001252 0.000661 -0.00399 0.000279 -0.038605 -0.004255</velocity>
+          <acceleration>-0.206886 0.19442 -8.32637 -0.035092 1.05881 -2.44789</acceleration>
+          <wrench>-0.015538 0.014602 -0.625344 0 -0 0</wrench>
+        </link>
+        <link name='spacer1'>
+          <pose>-0.535302 0.062543 0.089033 0.000874 0.003764 -0.005308</pose>
+          <velocity>-0.002912 0.000356 -9.1e-05 -0.003919 -0.034975 -3.1e-05</velocity>
+          <acceleration>-3.20204 0.566007 -0.153572 2.13817 -1.26374 -2.68199</acceleration>
+          <wrench>-0.012232 0.002162 -0.000587 0 -0 0</wrench>
+        </link>
+        <link name='spacer2'>
+          <pose>-0.5559 -0.045511 0.089014 0.000877 0.003763 -0.0046</pose>
+          <velocity>-0.003323 0.000435 -0.000383 -0.003897 -0.034856 -2.6e-05</velocity>
+          <acceleration>-3.03296 0.533979 -0.822822 2.18237 -1.50227 -2.68262</acceleration>
+          <wrench>-0.011587 0.00204 -0.003143 0 -0 0</wrench>
+        </link>
+        <link name='spacer3'>
+          <pose>-0.722136 -0.013821 0.089667 0.00088 0.003762 -0.003667</pose>
+          <velocity>-0.003225 0.00107 -0.006312 -0.003715 -0.034892 -2.2e-05</velocity>
+          <acceleration>-3.12923 0.281386 -12.8358 2.54706 -1.43115 -2.66505</acceleration>
+          <wrench>-0.011954 0.001075 -0.049035 0 -0 0</wrench>
+        </link>
+        <link name='spacer4'>
+          <pose>-0.701538 0.094233 0.089686 0.000878 0.003763 -0.004044</pose>
+          <velocity>-0.002814 0.000992 -0.006019 -0.003736 -0.035011 -2.6e-05</velocity>
+          <acceleration>-3.29605 0.314702 -12.1662 2.50624 -1.1934 -2.66427</acceleration>
+          <wrench>-0.012592 0.001202 -0.046477 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>0.378008 -0.437156 0.263801 0 0.275643 2.35619</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <plugin
+    filename="gz-sim-diff-drive-system"
+    name="gz::sim::systems::DiffDrive">
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+    <wheel_separation>0.137</wheel_separation>
+    <wheel_radius>0.0325</wheel_radius>
+    <odom_publish_frequency>1</odom_publish_frequency>
+    <topic>cmd_vel</topic>
+</plugin>
+  </world>
+</sdf>
