@@ -387,31 +387,6 @@ class Node:
         self.motor_speeds.data = [pwm_r, pwm_l]
         self.motors.publish(self.motor_speeds)
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
-<<<<<<< HEAD
-
-
-<<<<<<< HEAD
-    def imuCb(self,imu) -> None:
-        """recieves the imu readings from the MPU6050
-        Args:
-            imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
-        """
-        actual.w_z = imu.angular_velocity.y * math.pi / 180
-        actual.ax_current = imu.linear_acceleration.x
-
-        t.t_current = time()
-        t.delta_t = t.t_current - t.t_prev
-
-        actual.v_x = (actual.ax_current + actual.ax_prev) * t.delta_t / 2 * 4
-        
-        t.t_prev = t.t_current
-        actual.ax_prev = actual.ax_current
-        
-=======
->>>>>>> f1b5d4d32da7efe9066f409d56d817386b86b799
-=======
->>>>>>> c32f7ed0c99f7c024bcd0b4a558ce8628e84e57b
-        rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ... delta: {t.delta_t}")       
 
     def stopAll(self) -> None:
         """Stop all motors publish zeros to the motors"""
