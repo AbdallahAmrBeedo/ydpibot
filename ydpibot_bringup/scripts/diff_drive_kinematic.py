@@ -343,7 +343,7 @@ class Node:
             cmd (Twist): command velocity sent by teleop node or any other node that publish to the same topic
         """
         vx = cmd.linear.x * PARAM.kp_x
-        wz = cmd.angular.z * PARAM.kp_w
+        wz = pid_wz.compute(cmd.angular.z,actual.w_z)
 
         phi_r, phi_l = self.robot.kinematic(vx, wz)
         max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
