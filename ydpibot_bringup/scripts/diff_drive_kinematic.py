@@ -386,7 +386,11 @@ class Node:
 
         self.motor_speeds.data = [pwm_r, pwm_l]
         self.motors.publish(self.motor_speeds)
+<<<<<<< HEAD
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
+=======
+        rospy.loginfo(f"motor speeds: {self.motor_speeds.data} \nv_x: {actual.v_x} \nw_z: {actual.w_z}")       
+>>>>>>> 7ef3c9c087e95106e63a0079a73a0f769f072fb8
 
     def stopAll(self) -> None:
         """Stop all motors publish zeros to the motors"""
