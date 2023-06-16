@@ -320,7 +320,7 @@ class Node:
 
     def set_robot_param_callback(self, config, level):
         """
-        Dynamic reconfiguration of robot parameters to make the tuning much easier
+        Dynamic reconfiguration of robot parameters to make tuning much easier
         
         Args:
             config: the list of the paramter conigured with the new values coming from the server
