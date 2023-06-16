@@ -13,12 +13,11 @@
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
   </include>
   
-   
-  <node
-    name="tf_footprint_base"
-    pkg="tf"
-    type="static_transform_publisher"
-    args="0 0 0 0 0 0 base_link base_footprint 40" />
+
+  <node pkg ="tf" type="static_transform_publisher" name="laser_to_base_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_scan /laser_frame 40"/>
+  <node pkg ="tf" type="static_transform_publisher" name="base_footprint_to_base_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_footprint /base_scan 40"/>
+    
+
 <param name="robot_description" command="cat '$(find ydpibot_description)/urdf/ydpibot_description.urdf'" />
     
     <arg name="x" default="0"/>
@@ -29,6 +28,7 @@
           args="-urdf -param robot_description -model mybot -x $(arg x) -y $(arg y) -z $(arg z)" />
 
     <rosparam file="$(find ydpibot_description)/config/ydpibot_drive.yaml" command="load" />
+
 
     <node name="controller_manager" pkg="controller_manager" type="spawner"
           respawn="false" output="screen" args="mobile_base_controller" />

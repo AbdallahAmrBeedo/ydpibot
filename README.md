@@ -121,3 +121,13 @@ We would also like to thank the following people for their contributions to this
 - Yomna Omar (yomna.mokhtar@ejust.edu.eg)
 
 If you have any questions or feedback about YDPIbot, please contact us at abdallah.amr@ejust.edu.eg. We would love to hear from you!
+
+## Future Work
+
+- Try gmapping instead of hector
+- Use last edit of the urdf file (rar downloaded)
+- Apply localizatin on gazebo simulation
+- Odometry (options: try the encoders as it is, kalman filter between imu and encoders)
+- Add reset odom service for the pose estimator
+- Add Readme file for each pakage with how to use each one
+- Add GUI for the bot
