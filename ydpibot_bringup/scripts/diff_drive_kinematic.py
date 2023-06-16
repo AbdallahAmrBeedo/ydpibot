@@ -344,7 +344,7 @@ class Node:
 
     def cmdvelCb(self,cmd) -> None:
         """
-        Callback of the subiscribed topic /cmd_vel to publish motor speeds
+        Callback of the subiscribed topic /cmd_vel to set reference values
 
         Args:
             cmd (Twist): command velocity sent by teleop node or any other node that publish to the same topic
@@ -353,7 +353,7 @@ class Node:
         ref.w_z = cmd.angular.z
 
     def imuCb(self,imu) -> None:
-        """recieves the imu readings from the MPU6050
+        """recieves the imu readings from the MPU6050 and compute the motor speed values 
         Args:
             imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
         """
