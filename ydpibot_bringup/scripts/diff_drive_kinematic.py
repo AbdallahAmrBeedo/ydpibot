@@ -387,8 +387,6 @@ class Node:
         self.motor_speeds.data = [pwm_r, pwm_l]
         self.motors.publish(self.motor_speeds)
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
-
-
         rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ... delta: {t.delta_t}")       
 
     def stopAll(self) -> None:
