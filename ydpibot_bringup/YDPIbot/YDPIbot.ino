@@ -117,7 +117,7 @@ void loop()
 {
   imu();
   nh.spinOnce();
-  delay(50);
+  delay(100);
 }
 
 void pub_Rturns(){
@@ -136,7 +136,7 @@ void imu(){
   Wire.endTransmission(false);
   Wire.requestFrom(MPU, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
   //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
-  AccX = (Wire.read() << 8 | Wire.read()) / 1000;// / 16384.0; // X-axis value
+  AccX = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
   AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
   AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
   
