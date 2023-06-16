@@ -162,6 +162,12 @@ class Measured:
     ax_prev = 0
     ax_current = 0
 
+@dataclasses.dataclass
+class Reference:
+    """Reference values"""
+
+    v_x = 0
+    w_z = 0
 
 @dataclasses.dataclass
 class Time:
@@ -192,6 +198,7 @@ def map_from_to(
 
 PARAM = Param()
 actual = Measured()
+ref = Reference()
 t = Time()
 
 pid_vx = PID(
@@ -342,10 +349,29 @@ class Node:
         Args:
             cmd (Twist): command velocity sent by teleop node or any other node that publish to the same topic
         """
-        vx = cmd.linear.x * PARAM.kp_x
+        ref.v_x = cmd.linear.x
+        ref.w_z = cmd.angular.z
+
+    def imuCb(self,imu) -> None:
+        """recieves the imu readings from the MPU6050
+        Args:
+            imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
+        """
+        actual.w_z = imu.angular_velocity.y * math.pi / 180
+        actual.ax_current = imu.linear_acceleration.x
+
+        t.t_current = time()
+        t.delta_t = t.t_current - t.t_prev
+
+        actual.v_x += (actual.ax_current + actual.ax_prev) * t.delta_t / 2
         
+        t.t_prev = t.t_current
+        actual.ax_prev = actual.ax_current
+        
+        vx = ref.v_x * PARAM.kp_x
+
         pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
-        wz = pid_wz.compute(cmd.angular.z,actual.w_z)
+        wz = pid_wz.compute(ref.w_z, actual.w_z)
 
         phi_r, phi_l = self.robot.kinematic(vx, wz)
         max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
@@ -363,6 +389,7 @@ class Node:
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
 
 
+<<<<<<< HEAD
     def imuCb(self,imu) -> None:
         """recieves the imu readings from the MPU6050
         Args:
@@ -379,6 +406,8 @@ class Node:
         t.t_prev = t.t_current
         actual.ax_prev = actual.ax_current
         
+=======
+>>>>>>> f1b5d4d32da7efe9066f409d56d817386b86b799
         rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ... delta: {t.delta_t}")       
 
     def stopAll(self) -> None:
