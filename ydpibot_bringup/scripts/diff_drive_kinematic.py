@@ -162,6 +162,12 @@ class Measured:
     ax_prev = 0
     ax_current = 0
 
+@dataclasses.dataclass
+class Reference:
+    """Reference values"""
+
+    v_x = 0
+    w_z = 0
 
 @dataclasses.dataclass
 class Time:
@@ -192,6 +198,7 @@ def map_from_to(
 
 PARAM = Param()
 actual = Measured()
+ref = Reference()
 t = Time()
 
 pid_vx = PID(
@@ -342,26 +349,8 @@ class Node:
         Args:
             cmd (Twist): command velocity sent by teleop node or any other node that publish to the same topic
         """
-        vx = cmd.linear.x * PARAM.kp_x
-        
-        pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
-        wz = pid_wz.compute(cmd.angular.z,actual.w_z)
-
-        phi_r, phi_l = self.robot.kinematic(vx, wz)
-        max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
-
-        phi_r, phi_l = self.robot.sturate(phi_r, phi_l, max_phi, min_phi)
-
-        pwm_r = map_from_to(phi_r, min_phi, max_phi, PARAM.min_speed, PARAM.max_speed)
-        pwm_l = map_from_to(phi_l, min_phi, max_phi, PARAM.min_speed, PARAM.max_speed)
-
-        pwm_r = round(pwm_r)
-        pwm_l = round(pwm_l)
-
-        self.motor_speeds.data = [pwm_r, pwm_l]
-        self.motors.publish(self.motor_speeds)
-        rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
-
+        ref.v_x = cmd.linear.x
+        ref.w_z = cmd.angular.z
 
     def imuCb(self,imu) -> None:
         """recieves the imu readings from the MPU6050
@@ -379,6 +368,27 @@ class Node:
         t.t_prev = t.t_current
         actual.ax_prev = actual.ax_current
         
+        vx = ref.v_x * PARAM.kp_x
+
+        pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
+        wz = pid_wz.compute(ref.w_z, actual.w_z)
+
+        phi_r, phi_l = self.robot.kinematic(vx, wz)
+        max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
+
+        phi_r, phi_l = self.robot.sturate(phi_r, phi_l, max_phi, min_phi)
+
+        pwm_r = map_from_to(phi_r, min_phi, max_phi, PARAM.min_speed, PARAM.max_speed)
+        pwm_l = map_from_to(phi_l, min_phi, max_phi, PARAM.min_speed, PARAM.max_speed)
+
+        pwm_r = round(pwm_r)
+        pwm_l = round(pwm_l)
+
+        self.motor_speeds.data = [pwm_r, pwm_l]
+        self.motors.publish(self.motor_speeds)
+        rospy.loginfo(f"motor speeds: {self.motor_speeds.data}")
+
+
         rospy.loginfo(f"v_x: {actual.v_x} ..... w_z: {actual.w_z} ... delta: {t.delta_t}")       
 
     def stopAll(self) -> None:
