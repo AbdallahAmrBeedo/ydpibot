@@ -41,9 +41,9 @@
 
 ros::NodeHandle nh;
 
-sensor_msgs::Imu imu_msg;
-
-ros::Publisher pub_imu("/imu", &imu_msg);
+//sensor_msgs::Imu imu_msg;
+//
+//ros::Publisher pub_imu("/imu", &imu_msg);
 
 
 //const int MPU = 0x68; // MPU6050 I2C address
