@@ -353,24 +353,6 @@ class Node:
         """
         ref.v_x = cmd.linear.x
         ref.w_z = cmd.angular.z
-        vx = ref.v_x * PARAM.kp_x
-
-        wz = ref.w_z * PARAM.kp_w
-
-        phi_r, phi_l = self.robot.kinematic(vx, wz)
-        max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
-
-        phi_r, phi_l = self.robot.sturate(phi_r, phi_l, max_phi, min_phi)
-
-        pwm_r = map_from_to(phi_r, min_phi, max_phi, PARAM.min_speed, PARAM.max_speed)
-        pwm_l = map_from_to(phi_l, min_phi, max_phi, PARAM.min_speed, PARAM.max_speed)
-
-        pwm_r = round(pwm_r)
-        pwm_l = round(pwm_l)
-
-        self.motor_speeds.data = [pwm_r, pwm_l]
-        self.motors.publish(self.motor_speeds)
-        rospy.loginfo(f"motor speeds: {self.motor_speeds.data} \nv_x: {actual.v_x} \nw_z: {actual.w_z}")       
 
     def imuCb(self,imu) -> None:
         """recieves the imu readings from the MPU6050 and compute the motor speed values 

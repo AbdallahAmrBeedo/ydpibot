@@ -41,26 +41,22 @@
 
 ros::NodeHandle nh;
 
-//sensor_msgs::Imu imu_msg;
-//
-//ros::Publisher pub_imu("/imu", &imu_msg);
 
-
-//const int MPU = 0x68; // MPU6050 I2C address
-//float AccX, AccY, AccZ;
-//float GyroX, GyroY, GyroZ;
-//float accAngleX, accAngleY, gyroAngleX, gyroAngleY, gyroAngleZ;
-//float roll, pitch, yaw;
-//float AccErrorX, AccErrorY, GyroErrorX, GyroErrorY, GyroErrorZ;
-//float elapsedTime, currentTime, previousTime;
-//float alpha_gyro = 0.6;
-//float alpha_accel = 0.8;
-//float old_AccX = 0;
-//float old_AccY = 0;
-//float old_AccZ = 0;
-//float old_GyroX = 0;
-//float old_GyroY = 0;
-//float old_GyroZ = 0;
+const int MPU = 0x68; // MPU6050 I2C address
+float AccX, AccY, AccZ;
+float GyroX, GyroY, GyroZ;
+float accAngleX, accAngleY, gyroAngleX, gyroAngleY, gyroAngleZ;
+float roll, pitch, yaw;
+float AccErrorX, AccErrorY, GyroErrorX, GyroErrorY, GyroErrorZ;
+float elapsedTime, currentTime, previousTime;
+float alpha_gyro = 0.6;
+float alpha_accel = 0.8;
+float old_AccX = 0;
+float old_AccY = 0;
+float old_AccZ = 0;
+float old_GyroX = 0;
+float old_GyroY = 0;
+float old_GyroZ = 0;
 
 
 // motor driver library
@@ -97,6 +93,9 @@ void motorsCb(const std_msgs::Int16MultiArray& PWM){
   Left_Motor.run(Dir_l);
 }
 
+sensor_msgs::Imu imu_msg;
+
+ros::Publisher pub_imu("/imu", &imu_msg);
 ros::Subscriber<std_msgs::Int16MultiArray> motors("/motor_speeds", &motorsCb);
 
 void setup() 
@@ -109,13 +108,80 @@ void setup()
 //  Wire.write(0x00);                  // Make reset - place a 0 into the 6B register
 //  Wire.endTransmission(true);        //end the transmission
   nh.initNode();
-//  nh.advertise(pub_imu);
+  nh.advertise(pub_imu);
   nh.subscribe(motors);
 }
 
 void loop() 
 {
-//  imu();
+  Wire.beginTransmission(MPU);
+  Wire.write(0x3B); // Start with register 0x3B (ACCEL_XOUT_H)
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
+  //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
+  AccX = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
+  AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
+  AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
+  
+  AccX = AccX - 2.;// - error[0];
+  AccY = AccY + 0.95;// - error[1];
+  AccZ = AccZ + 0.04;
+
+//  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
+//  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
+//  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
+//  old_AccX = AccX;
+//  old_AccY = AccY;
+//  old_AccZ = AccZ;
+  
+  // Calculating Roll and Pitch from the accelerometer data
+  accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI); //- 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
+  accAngleY = (atan(-1 * AccX / sqrt(pow(AccY, 2) + pow(AccZ, 2))) * 180 / PI); //+ 1.58; // AccErrorY ~(-1.58)
+  
+  // === Read gyroscope data === //
+  previousTime = currentTime;        // Previous time is stored before the actual time read
+  currentTime = millis();            // Current time actual time read
+  elapsedTime = (currentTime - previousTime) / 1000; // Divide by 1000 to get seconds
+  Wire.beginTransmission(MPU);
+  Wire.write(0x43); // Gyro data first register address 0x43
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 6, true); // Read 4 registers total, each axis value is stored in 2 registers
+  GyroX = (Wire.read() << 8 | Wire.read()) / 131.0; // For a 250deg/s range we have to divide first the raw value by 131.0, according to the datasheet
+  GyroY = (Wire.read() << 8 | Wire.read()) / 131.0;
+  GyroZ = (Wire.read() << 8 | Wire.read()) / 131.0;
+  // Correct the outputs with the calculated error values
+  GyroX = GyroX + 7.5;// - error[2]; // GyroErrorX ~(-0.56)
+  GyroY = GyroY + 0.1;// - error[3]; // GyroErrorY ~(2)
+  GyroZ = GyroZ + 0.05;// - error[4]; // GyroErrorZ ~ (-0.8)
+
+  GyroX = moving_average_filter(GyroX, old_GyroX, alpha_gyro);
+  GyroY = moving_average_filter(GyroY, old_GyroY, alpha_gyro);
+  GyroZ = moving_average_filter(GyroZ, old_GyroZ, alpha_gyro);
+  old_GyroX = GyroX;
+  old_GyroY = GyroY;
+  old_GyroZ = GyroZ;
+    
+  gyroAngleX = gyroAngleX + GyroX * elapsedTime; // deg/s * s = deg
+  gyroAngleY = gyroAngleY + GyroY * elapsedTime;
+  yaw =  yaw + GyroZ * elapsedTime;
+
+  roll = gyroAngleX;
+  pitch = gyroAngleY * 0.9 + accAngleY * 0.1;
+
+  imu_msg.orientation.x = roll;
+  imu_msg.orientation.y = pitch;
+  imu_msg.orientation.z = yaw;
+  imu_msg.orientation.w = 0.00;
+  imu_msg.angular_velocity.x = GyroX;
+  imu_msg.angular_velocity.y = GyroY;
+  imu_msg.angular_velocity.z = GyroZ;
+  imu_msg.linear_acceleration.x = AccX;
+  imu_msg.linear_acceleration.y = AccY;
+  imu_msg.linear_acceleration.z = AccZ;
+  imu_msg.header.stamp = nh.now();
+
+  pub_imu.publish(&imu_msg);
+  
   nh.spinOnce();
   delay(100);
 }
@@ -130,75 +196,8 @@ void pub_Lturns(){
 //  else if (Dir_l == BACKWARD) Lturns.data -= 1;
   }
 
-//void imu(){
-//  Wire.beginTransmission(MPU);
-//  Wire.write(0x3B); // Start with register 0x3B (ACCEL_XOUT_H)
-//  Wire.endTransmission(false);
-//  Wire.requestFrom(MPU, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
-//  //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
-//  AccX = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
-//  AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
-//  AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
-//  
-//  AccX = AccX - 2.;// - error[0];
-//  AccY = AccY + 0.95;// - error[1];
-//  AccZ = AccZ + 0.04;
-//
-////  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
-////  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
-////  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
-////  old_AccX = AccX;
-////  old_AccY = AccY;
-////  old_AccZ = AccZ;
-//  
-//  // Calculating Roll and Pitch from the accelerometer data
-//  accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI); //- 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
-//  accAngleY = (atan(-1 * AccX / sqrt(pow(AccY, 2) + pow(AccZ, 2))) * 180 / PI); //+ 1.58; // AccErrorY ~(-1.58)
-//  
-//  // === Read gyroscope data === //
-//  previousTime = currentTime;        // Previous time is stored before the actual time read
-//  currentTime = millis();            // Current time actual time read
-//  elapsedTime = (currentTime - previousTime) / 1000; // Divide by 1000 to get seconds
-//  Wire.beginTransmission(MPU);
-//  Wire.write(0x43); // Gyro data first register address 0x43
-//  Wire.endTransmission(false);
-//  Wire.requestFrom(MPU, 6, true); // Read 4 registers total, each axis value is stored in 2 registers
-//  GyroX = (Wire.read() << 8 | Wire.read()) / 131.0; // For a 250deg/s range we have to divide first the raw value by 131.0, according to the datasheet
-//  GyroY = (Wire.read() << 8 | Wire.read()) / 131.0;
-//  GyroZ = (Wire.read() << 8 | Wire.read()) / 131.0;
-//  // Correct the outputs with the calculated error values
-//  GyroX = GyroX + 7.5;// - error[2]; // GyroErrorX ~(-0.56)
-//  GyroY = GyroY + 0.1;// - error[3]; // GyroErrorY ~(2)
-//  GyroZ = GyroZ + 0.05;// - error[4]; // GyroErrorZ ~ (-0.8)
-//
-//  GyroX = moving_average_filter(GyroX, old_GyroX, alpha_gyro);
-//  GyroY = moving_average_filter(GyroY, old_GyroY, alpha_gyro);
-//  GyroZ = moving_average_filter(GyroZ, old_GyroZ, alpha_gyro);
-//  old_GyroX = GyroX;
-//  old_GyroY = GyroY;
-//  old_GyroZ = GyroZ;
-//    
-//  gyroAngleX = gyroAngleX + GyroX * elapsedTime; // deg/s * s = deg
-//  gyroAngleY = gyroAngleY + GyroY * elapsedTime;
-//  yaw =  yaw + GyroZ * elapsedTime;
-//
-//  roll = gyroAngleX;
-//  pitch = gyroAngleY * 0.9 + accAngleY * 0.1;
-//
-//  imu_msg.orientation.x = roll;
-//  imu_msg.orientation.y = pitch;
-//  imu_msg.orientation.z = yaw;
-//  imu_msg.orientation.w = 0.00;
-//  imu_msg.angular_velocity.x = GyroX;
-//  imu_msg.angular_velocity.y = GyroY;
-//  imu_msg.angular_velocity.z = GyroZ;
-//  imu_msg.linear_acceleration.x = AccX;
-//  imu_msg.linear_acceleration.y = AccY;
-//  imu_msg.linear_acceleration.z = AccZ;
-//  imu_msg.header.stamp = nh.now();
-//
-//  pub_imu.publish(&imu_msg);
-//}
+void imu(){
+}
 
 void odom(){
   
