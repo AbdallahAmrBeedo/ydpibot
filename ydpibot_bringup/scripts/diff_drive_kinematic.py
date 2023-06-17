@@ -372,7 +372,7 @@ class Node:
         
         vx = ref.v_x * PARAM.kp_x
 
-        wz = ref.w_z * PARAM.kp_w
+        wz = pid_wz.compute(ref.w_z, actual.w_z)
 
         phi_r, phi_l = self.robot.kinematic(vx, wz)
         max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
