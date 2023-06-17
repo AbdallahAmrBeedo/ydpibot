@@ -359,7 +359,7 @@ class Node:
         Args:
             imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
         """
-        actual.w_z = imu.angular_velocity.y * math.pi / 180
+        actual.w_z = - imu.angular_velocity.y * math.pi / 180
         actual.ax_current = imu.linear_acceleration.x
 
         t.t_current = time()
