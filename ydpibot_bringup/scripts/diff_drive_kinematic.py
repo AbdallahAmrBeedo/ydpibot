@@ -333,6 +333,7 @@ class Node:
             config['min_vx'] = PARAM.min_vx
             config['max_wz'] = PARAM.max_wz
             config['min_wz'] = PARAM.min_wz
+            pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
             return config
         PARAM.max_speed = config['max_speed']
         PARAM.min_speed = config['min_speed']
@@ -340,6 +341,7 @@ class Node:
         PARAM.min_vx = config['min_vx']
         PARAM.max_wz = config['max_wz']
         PARAM.min_wz = config['min_wz']
+        pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
         return config
 
     def cmdvelCb(self,cmd) -> None:
@@ -370,8 +372,7 @@ class Node:
         
         vx = ref.v_x * PARAM.kp_x
 
-        pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
-        wz = pid_wz.compute(ref.w_z, actual.w_z)
+        wz = ref.w_z * PARAM.kp_w
 
         phi_r, phi_l = self.robot.kinematic(vx, wz)
         max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
