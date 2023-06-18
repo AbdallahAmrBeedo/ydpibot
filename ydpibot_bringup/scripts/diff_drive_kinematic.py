@@ -280,6 +280,7 @@ class Node:
 
         rospy.on_shutdown(self.stopAll)
         
+        self.rate = rospy.Rate(0.0001)
         self.robot = Robot()
 
         srvpid = Server(pidConfig, self.set_pid_param_callback, "pid")
@@ -387,6 +388,7 @@ class Node:
 
         self.motor_speeds.data = [pwm_r, pwm_l]
         self.motors.publish(self.motor_speeds)
+        self.rate.sleep()
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}  \nactual_w_z: {actual.w_z} \nw_z: {wz}")
 
     def stopAll(self) -> None:
