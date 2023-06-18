@@ -309,6 +309,7 @@ class Node:
             config['kp_w'] = PARAM.kp_w
             config['ki_w'] = PARAM.ki_w
             config['kd_w'] = PARAM.kd_w
+            pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
             return config
         PARAM.kp_x = config['kp_x']
         PARAM.ki_x = config['ki_x']
@@ -316,6 +317,7 @@ class Node:
         PARAM.kp_w = config['kp_w']
         PARAM.ki_w = config['ki_w']
         PARAM.kd_w = config['kd_w']
+        pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
         return config
 
     def set_robot_param_callback(self, config, level):
@@ -333,7 +335,6 @@ class Node:
             config['min_vx'] = PARAM.min_vx
             config['max_wz'] = PARAM.max_wz
             config['min_wz'] = PARAM.min_wz
-            pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
             return config
         PARAM.max_speed = config['max_speed']
         PARAM.min_speed = config['min_speed']
@@ -341,7 +342,6 @@ class Node:
         PARAM.min_vx = config['min_vx']
         PARAM.max_wz = config['max_wz']
         PARAM.min_wz = config['min_wz']
-        pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
         return config
 
     def cmdvelCb(self,cmd) -> None:
