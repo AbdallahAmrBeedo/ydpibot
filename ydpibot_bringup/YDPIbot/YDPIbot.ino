@@ -49,8 +49,8 @@ float accAngleX, accAngleY, gyroAngleX, gyroAngleY, gyroAngleZ;
 float roll, pitch, yaw;
 float AccErrorX, AccErrorY, GyroErrorX, GyroErrorY, GyroErrorZ;
 float elapsedTime, currentTime, previousTime;
-float alpha_gyro = 0.6;
-float alpha_accel = 0.8;
+float alpha_gyro = 0.9;
+float alpha_accel = 0.7;
 float old_AccX = 0;
 float old_AccY = 0;
 float old_AccZ = 0;
@@ -102,11 +102,12 @@ void setup()
 {
   attachInterrupt(digitalPinToInterrupt(19),pub_Rturns,RISING);
   attachInterrupt(digitalPinToInterrupt(18),pub_Lturns,FALLING);
-//  Wire.begin();                      // Initialize comunication
-//  Wire.beginTransmission(MPU);       // Start communication with MPU6050 // MPU=0x68
-//  Wire.write(0x6B);                  // Talk to the register 6B
-//  Wire.write(0x00);                  // Make reset - place a 0 into the 6B register
-//  Wire.endTransmission(true);        //end the transmission
+  Wire.begin();                      // Initialize comunication
+  Wire.beginTransmission(MPU);       // Start communication with MPU6050 // MPU=0x68
+  Wire.write(0x6B);                  // Talk to the register 6B
+  Wire.write(0x00);                  // Make reset - place a 0 into the 6B register
+  Wire.endTransmission(true);        //end the transmission
+  delay(500);
   nh.initNode();
   nh.advertise(pub_imu);
   nh.subscribe(motors);
@@ -123,16 +124,16 @@ void loop()
   AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
   AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
   
-  AccX = AccX - 2.;// - error[0];
-  AccY = AccY + 0.95;// - error[1];
-  AccZ = AccZ + 0.04;
+  AccX = AccX - 0.158 + 0.03;// - error[0];
+  AccY = AccY + 0.947 + 0.04;// - error[1];
+  AccZ = AccZ + 0.028 + 0.03;
 
-//  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
-//  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
-//  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
-//  old_AccX = AccX;
-//  old_AccY = AccY;
-//  old_AccZ = AccZ;
+  AccX = moving_average_filter(AccX, old_AccX, alpha_accel);
+  AccY = moving_average_filter(AccY, old_AccY, alpha_accel);
+  AccZ = moving_average_filter(AccZ, old_AccZ, alpha_accel);
+  old_AccX = AccX;
+  old_AccY = AccY;
+  old_AccZ = AccZ;
   
   // Calculating Roll and Pitch from the accelerometer data
   accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI); //- 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
@@ -150,9 +151,9 @@ void loop()
   GyroY = (Wire.read() << 8 | Wire.read()) / 131.0;
   GyroZ = (Wire.read() << 8 | Wire.read()) / 131.0;
   // Correct the outputs with the calculated error values
-  GyroX = GyroX + 7.5;// - error[2]; // GyroErrorX ~(-0.56)
-  GyroY = GyroY + 0.1;// - error[3]; // GyroErrorY ~(2)
-  GyroZ = GyroZ + 0.05;// - error[4]; // GyroErrorZ ~ (-0.8)
+  GyroX = GyroX + 7.35 - 0.08;// - error[2]; // GyroErrorX ~(-0.56)
+  GyroY = GyroY - 0.2 + 0.45;// - error[3]; // GyroErrorY ~(2)
+  GyroZ = GyroZ + 0.05 - 0.9;// - error[4]; // GyroErrorZ ~ (-0.8)
 
   GyroX = moving_average_filter(GyroX, old_GyroX, alpha_gyro);
   GyroY = moving_average_filter(GyroY, old_GyroY, alpha_gyro);
