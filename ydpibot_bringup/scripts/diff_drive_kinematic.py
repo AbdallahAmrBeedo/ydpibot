@@ -280,7 +280,7 @@ class Node:
 
         rospy.on_shutdown(self.stopAll)
         
-        self.rate = rospy.Rate(0.0001)
+        self.rate = rospy.Rate(100)
         self.robot = Robot()
 
         srvpid = Server(pidConfig, self.set_pid_param_callback, "pid")
