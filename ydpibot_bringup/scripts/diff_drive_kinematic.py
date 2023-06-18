@@ -280,7 +280,6 @@ class Node:
 
         rospy.on_shutdown(self.stopAll)
         
-        self.rate = rospy.Rate(100)
         self.robot = Robot()
 
         srvpid = Server(pidConfig, self.set_pid_param_callback, "pid")
@@ -373,7 +372,7 @@ class Node:
         
         vx = ref.v_x * PARAM.kp_x
 
-        wz = ref.w_z * 5 + pid_wz.compute(ref.w_z, actual.w_z)
+        wz = ref.w_z * 6 + pid_wz.compute(ref.w_z, actual.w_z)
 
         phi_r, phi_l = self.robot.kinematic(vx, wz)
         max_phi, min_phi = self.robot.find_phi_boudary_values(PARAM)
@@ -388,7 +387,6 @@ class Node:
 
         self.motor_speeds.data = [pwm_r, pwm_l]
         self.motors.publish(self.motor_speeds)
-        self.rate.sleep()
         rospy.loginfo(f"motor speeds: {self.motor_speeds.data}  \nactual_w_z: {actual.w_z} \nw_z: {wz}")
 
     def stopAll(self) -> None:
