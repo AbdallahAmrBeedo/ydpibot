@@ -11,14 +11,14 @@
         xyz="-0.0093884 -5.5511E-17 0.047189"
         rpy="0 0 0" />
       <mass
-        value="0.11353" />
+        value="1.11353" />
       <inertia
-        ixx="0"
-        ixy="0"
-        ixz="0"
-        iyy="0"
-        iyz="0"
-        izz="0" />
+        ixx="0.1002007"
+        ixy="-4.5965E-19"
+        ixz="-9.7266E-06"
+        iyy="0.10030078"
+        iyz="1.1172E-20"
+        izz="0.20047883" />
     </inertial>
     <visual>
       <origin
@@ -44,21 +44,30 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="base_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Wood</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <link
     name="Upper_base">
     <inertial>
       <origin
-        xyz="-0.00023228 -5.5511E-17 0.0015"
+        xyz="-0.00023228 0 0.0165"
         rpy="0 0 0" />
       <mass
         value="0.072243" />
       <inertia
         ixx="7.9419E-05"
-        ixy="-2.5406E-19"
-        ixz="1.9615E-20"
+        ixy="-2.2935E-19"
+        ixz="7.6782E-21"
         iyy="0.00027821"
-        iyz="3.6365E-21"
-        izz="0.00035752" />
+        iyz="3.7343E-21"
+        izz="0.50035752" />
     </inertial>
     <visual>
       <origin
@@ -84,6 +93,15 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="Upper_base">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Wood</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="Upper_base"
     type="fixed">
@@ -101,17 +119,17 @@
     name="spacer1">
     <inertial>
       <origin
-        xyz="-5.5511E-17 -9.7145E-17 -0.017"
+        xyz="2.7756E-17 2.7756E-17 -0.0095"
         rpy="0 0 0" />
       <mass
-        value="0.0038202" />
+        value="0.0049983" />
       <inertia
-        ixx="7.5881E-07"
-        ixy="-1.672E-24"
-        ixz="3.7903E-23"
-        iyy="7.5881E-07"
-        iyz="4.1639E-23"
-        izz="5.1484E-08" />
+        ixx="1.6932E-06"
+        ixy="1.5579E-24"
+        ixz="6.0789E-23"
+        iyy="1.6932E-06"
+        iyz="3.0979E-22"
+        izz="6.6211E-08" />
     </inertial>
     <visual>
       <origin
@@ -124,7 +142,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -137,9 +155,18 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="spacer1">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/ZincYellow</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="spacer1_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="0.084615 0.055 0"
       rpy="0 0 0" />
@@ -148,23 +175,23 @@
     <child
       link="spacer1" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 0" />
   </joint>
   <link
     name="spacer2">
     <inertial>
       <origin
-        xyz="-8.3267E-17 -8.3267E-17 -0.017"
+        xyz="4.1633E-16 -2.7756E-17 -0.0095"
         rpy="0 0 0" />
       <mass
-        value="0.0038202" />
+        value="0.0049983" />
       <inertia
-        ixx="7.5881E-07"
-        ixy="-3.5E-24"
-        ixz="3.2864E-21"
-        iyy="7.5881E-07"
-        iyz="3.2535E-23"
-        izz="5.1484E-08" />
+        ixx="1.6932E-06"
+        ixy="2.1369E-25"
+        ixz="7.5795E-21"
+        iyy="1.6932E-06"
+        iyz="8.4589E-23"
+        izz="6.6211E-08" />
     </inertial>
     <visual>
       <origin
@@ -177,7 +204,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -190,9 +217,18 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="spacer2">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/ZincYellow</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="spacer2_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="0.084615 -0.055 0"
       rpy="0 0 0" />
@@ -201,23 +237,23 @@
     <child
       link="spacer2" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 0" />
   </joint>
   <link
     name="spacer3">
     <inertial>
       <origin
-        xyz="-8.3267E-17 5.5511E-17 -0.017"
+        xyz="-1.5474E-15 2.7756E-17 -0.0095"
         rpy="0 0 0" />
       <mass
-        value="0.0038202" />
+        value="0.0049983" />
       <inertia
-        ixx="7.5881E-07"
-        ixy="-9.9272E-25"
-        ixz="3.3078E-21"
-        iyy="7.5881E-07"
-        iyz="1.6292E-26"
-        izz="5.1484E-08" />
+        ixx="1.6932E-06"
+        ixy="-1.1126E-25"
+        ixz="7.5759E-21"
+        iyy="1.6932E-06"
+        iyz="8.7991E-24"
+        izz="6.6211E-08" />
     </inertial>
     <visual>
       <origin
@@ -230,7 +266,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -243,9 +279,18 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="spacer3">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/ZincYellow</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="spacer3_joiint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="-0.084615 -0.055 0"
       rpy="0 0 0" />
@@ -254,23 +299,23 @@
     <child
       link="spacer3" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 0" />
   </joint>
   <link
     name="spacer4">
     <inertial>
       <origin
-        xyz="-6.9389E-18 2.7756E-17 -0.017"
+        xyz="-1.5959E-15 1.3878E-17 -0.0095"
         rpy="0 0 0" />
       <mass
-        value="0.0038202" />
+        value="0.0049983" />
       <inertia
-        ixx="7.5881E-07"
-        ixy="-1.1602E-24"
-        ixz="3.3017E-21"
-        iyy="7.5881E-07"
-        iyz="3.9363E-23"
-        izz="5.1484E-08" />
+        ixx="1.6932E-06"
+        ixy="1.4885E-24"
+        ixz="7.595E-21"
+        iyy="1.6932E-06"
+        iyz="8.3237E-23"
+        izz="6.6211E-08" />
     </inertial>
     <visual>
       <origin
@@ -283,7 +328,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="1 1 0 1" />
       </material>
     </visual>
     <collision>
@@ -296,9 +341,18 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="spacer4">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/ZincYellow</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="spacer4_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="-0.084615 0.055 0"
       rpy="0 0 0" />
@@ -307,22 +361,22 @@
     <child
       link="spacer4" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 0" />
   </joint>
   <link
     name="base_scan">
     <inertial>
       <origin
-        xyz="0.010012 8.6042E-16 -0.015783"
+        xyz="0.010012 8.3267E-17 -0.00078299"
         rpy="0 0 0" />
       <mass
         value="0.032124" />
       <inertia
         ixx="6.0421E-06"
-        ixy="-8.5897E-20"
-        ixz="-2.1233E-19"
+        ixy="-8.5096E-20"
+        ixz="-2.1525E-19"
         iyy="1.7716E-05"
-        iyz="3.48E-20"
+        iyz="3.5491E-20"
         izz="2.1195E-05" />
     </inertial>
     <visual>
@@ -336,7 +390,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="0 0 1 1" />
       </material>
     </visual>
     <collision>
@@ -349,7 +403,7 @@
       </geometry>
     </collision>
   </link>
-  <gazebo reference="base_scan">
+    <gazebo reference="base_scan">
         <material>Gazebo/Blue</material>
 
         <sensor name="laser" type="ray">
@@ -387,22 +441,22 @@
     <child
       link="base_scan" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 0" />
   </joint>
   <link
     name="right_wheel">
     <inertial>
       <origin
-        xyz="-4.5103E-16 -0.0125 5.0654E-16"
+        xyz="-6.9389E-18 -0.0125 6.9389E-18"
         rpy="0 0 0" />
       <mass
-        value="0.075104" />
+        value="0.1" />
       <inertia
         ixx="2.5621E-05"
-        ixy="-4.0701E-39"
-        ixz="-2.9995E-39"
-        iyy="4.3419E-05"
-        iyz="7.1293E-38"
+        ixy="-3.0526E-18"
+        ixz="-2.9995E-19"
+        iyy="8.3419E-03"
+        iyz="7.1293E-18"
         izz="2.5621E-05" />
     </inertial>
     <visual>
@@ -416,7 +470,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="0 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -429,6 +483,15 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="right_wheel">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="10.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="right_wheel_joint"
     type="continuous">
@@ -459,13 +522,13 @@
         xyz="-4.7184E-16 -0.0125 4.7184E-16"
         rpy="0 0 0" />
       <mass
-        value="0.075104" />
+        value="0.1" />
       <inertia
         ixx="2.5621E-05"
-        ixy="-3.0526E-38"
-        ixz="-2.9995E-39"
-        iyy="4.3419E-05"
-        iyz="7.1293E-38"
+        ixy="-3.0526E-18"
+        ixz="-2.9995E-19"
+        iyy="8.3419E-03"
+        iyz="7.1293E-18"
         izz="2.5621E-05" />
     </inertial>
     <visual>
@@ -479,7 +542,7 @@
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="0 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -492,6 +555,15 @@
       </geometry>
     </collision>
   </link>
+  <gazebo reference="left_wheel">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="10.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="left_wheel_joint"
     type="continuous">
@@ -519,17 +591,17 @@
     name="caster_wheel_">
     <inertial>
       <origin
-        xyz="-1.2363E-08 -1.1975E-08 -0.00077934"
+        xyz="-9.7039E-09 -9.3993E-09 0.0022919"
         rpy="0 0 0" />
       <mass
-        value="0.12787" />
+        value="0.4" />
       <inertia
-        ixx="6.5207E-05"
+        ixx="7.0984E-05"
         ixy="3.8139E-11"
-        ixz="9.5649E-11"
-        iyy="5.3836E-05"
+        ixz="9.5484E-11"
+        iyy="5.9612E-04"
         iyz="1.4958E-11"
-        izz="7.8435E-05" />
+        izz="8.4211E-05" />
     </inertial>
     <visual>
       <origin
@@ -542,7 +614,7 @@
       <material
         name="">
         <color
-          rgba="0.95686 0.95686 0.96078 1" />
+          rgba="1 0 1 1" />
       </material>
     </visual>
     <collision>
@@ -554,7 +626,16 @@
           filename="package://ydpibot_description/meshes/caster_wheel_.STL" />
       </geometry>
     </collision>
-  </link>
+  </link>  
+  <gazebo reference="caster_wheel_">
+    <mu1 value="0.0"/>
+    <mu2 value="0.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/White</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
   <joint
     name="caster_wheel__joint"
     type="fixed">
@@ -566,23 +647,23 @@
     <child
       link="caster_wheel_" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 0" />
   </joint>
   <link
     name="IMU">
     <inertial>
       <origin
-        xyz="-0.00017852 -6.9389E-18 -0.0008"
+        xyz="-0.021085 4.0683E-05 0.0050175"
         rpy="0 0 0" />
       <mass
-        value="0.00046193" />
+        value="0.0014392" />
       <inertia
-        ixx="1.532E-08"
-        ixy="0"
-        ixz="-8.1617E-26"
-        iyy="8.647E-09"
-        iyz="6.4947E-27"
-        izz="2.377E-08" />
+        ixx="3.8574E-08"
+        ixy="2.8168E-14"
+        ixz="-7.2192E-15"
+        iyy="1.4941E-08"
+        iyz="1.5273E-14"
+        izz="4.2201E-08" />
     </inertial>
     <visual>
       <origin
@@ -595,7 +676,7 @@
       <material
         name="">
         <color
-          rgba="0 0.28235 0.85098 1" />
+          rgba="0 0 1 1" />
       </material>
     </visual>
     <collision>
@@ -619,10 +700,11 @@
     <child
       link="IMU" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 0" />
   </joint>
   <gazebo reference="IMU">
     <gravity>true</gravity>
+    <material>Gazebo/Blue</material>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
       <update_rate>100</update_rate>
