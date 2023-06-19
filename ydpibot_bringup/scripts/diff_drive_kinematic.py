@@ -359,7 +359,7 @@ class Node:
         Args:
             imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
         """
-        actual.w_z = - imu.angular_velocity.y * math.pi / 180
+        actual.w_z = - imu.angular_velocity.y
         actual.ax_current = imu.linear_acceleration.x
 
         t.t_current = time()
@@ -387,7 +387,7 @@ class Node:
 
         self.motor_speeds.data = [pwm_r, pwm_l]
         self.motors.publish(self.motor_speeds)
-        rospy.loginfo(f"motor speeds: {self.motor_speeds.data}  \nactual_w_z: {actual.w_z} \nw_z: {wz}")
+        rospy.loginfo(f"motor speeds: {self.motor_speeds.data}  \nactual_w_z: {actual.w_z} \nw_z: {wz} \nactualv_x: {actual.v_x}")
 
     def stopAll(self) -> None:
         """Stop all motors publish zeros to the motors"""
