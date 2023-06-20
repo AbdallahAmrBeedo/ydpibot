@@ -23,7 +23,7 @@ To assemble YDPIbot, you will need the following components:
 Follow these steps to assemble YDPIbot:
 
 1. Connect the Arduino Mega to the motor driver shield and the optical encoders and MPU6050 according to the pinout diagram provided in the documentation.
-2. Connect the IMU to the Arduino Mega using the I2C interface.
+2. Connect the IMU to Raspberry Pi using the I2C interface and follow the instructions in the [mpu6050 pkg](https://github.com/PigeonSensei/pigeon_imu_driver/tree/master/mpu6050).
 3. Mount the YDLidar on top of the robot using screws.
 4. Mount the Raspberry Pi and the motor driver shield on the chassis of the robot using screws and standoffs.
 5. Connect the DC motors to the motor driver shield and attach the wheels to the motor shafts.
@@ -39,6 +39,7 @@ To use YDPIbot, you will need to install the following dependencies:
 - [Ubiquity Robotics image - Ubuntu 20.04](https://learn.ubiquityrobotics.com/noetic_pi_image_downloads) for rasberry pi
 - [ROS Noetic](http://wiki.ros.org/noetic/Installation) - the ubiquity robotics image have ROS noetic already-
 - [YDLidar pkg](https://github.com/PinkWink/ydlidar)
+- [MPU6050](https://github.com/PigeonSensei/pigeon_imu_driver/tree/master/mpu6050)
 
 ### Installing Ubuntu20.04 on Raspberry PI
 
@@ -65,6 +66,20 @@ To install the YDLidar pkg, follow these steps:
 3. Follow the instructions in the [README file](https://github.com/PinkWink/ydlidar) to build the YDLidar pkg.
 
 4. Run some demo with the lidar to check if it's working.
+
+### Installing MPU6050 pkg
+
+To install the MPU6050 pkg, follow these steps:
+
+1. Open a terminal on your Raspberry Pi.
+
+2. Clone the MPU6050 repository using the following command:
+
+    `https://github.com/PigeonSensei/pigeon_imu_driver/tree/master/mpu6050`
+
+3. Install wiringPi library from [here](http://wiringpi.com/download-and-install/)
+
+4. Run some demo with the IMU to check if it's working.
 
 ### Installing YDPIbot pkg
 
@@ -93,8 +108,22 @@ To install the YDPIbot package, follow these steps:
 4. Upload the code and connect the Arduino to the raspberry pi.
 
 ## Usage
+---------------------------
+For using the robot hardware, just open a terminal on the Raspberry pi and run the following command:
 
------------------------------------------------
+`roslaunch ydpibot_bringup robot.launch`
+
+and wait until you see the massage `Sensors calibrated, Start!`
+
+Now, you can run any other pkg to do anything!
+
+---------------------------
+
+For using the robot simulation, just open a terminal on the PC and run the following command:
+
+`roslaunch ydpibot_description robot.launch`
+
+Now, you can run any other pkg to do anything!
 
 ## Contributing
 
@@ -112,6 +141,7 @@ YDPIbot was created by Abdallah Amr, Mostafa Osama, Tarek Shohdy, and Yomna Omar
 - [YDLidar SDK](https://www.ydlidar.com/products/view/5.html)
 - [Adafruit Motor Shield library](https://learn.adafruit.com/adafruit-motor-shield/library-install)
 - [Ubiquity Robotics Raspberry Pi Image](https://learn.ubiquityrobotics.comnoetic_pi_image_downloads)
+- [MPU6050](https://github.com/PigeonSensei/pigeon_imu_driver/tree/master/mpu6050)
 
 We would also like to thank the following people for their contributions to this project:
 
