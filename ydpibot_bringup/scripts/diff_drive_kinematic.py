@@ -130,7 +130,6 @@ class PID:
 @dataclasses.dataclass
 class Param:
     """Tuning and utils params"""
-    alpha = 0.75
     kp_x = rospy.get_param("/pid/x/kp")
     ki_x = rospy.get_param("/pid/x/ki")
     kd_x = rospy.get_param("/pid/x/kd")
