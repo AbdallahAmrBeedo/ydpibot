@@ -130,7 +130,7 @@ class PID:
 @dataclasses.dataclass
 class Param:
     """Tuning and utils params"""
-
+    alpha = 0.75
     kp_x = rospy.get_param("/pid/x/kp")
     ki_x = rospy.get_param("/pid/x/ki")
     kd_x = rospy.get_param("/pid/x/kd")
@@ -382,15 +382,12 @@ class Node:
             rospy.loginfo("Sensors calibrated, Start!")
             self.flag -= 1
         actual.w_z = - imu.angular_velocity.y
-        actual.ax_current = imu.linear_acceleration.x
+        actual.ax_current = imu.linear_acceleration.x * PARAM.alpha + (1 - PARAM.alpha) * actual.ax_prev
 
         t.t_current = time()
         t.delta_t = t.t_current - t.t_prev
 
-        if ref.v_x != 0:
-            actual.v_x += (actual.ax_current + actual.ax_prev) * t.delta_t
-        else:
-            actual.v_x = 0
+        actual.v_x += (actual.ax_current + actual.ax_prev) * t.delta_t / 2
         
         t.t_prev = t.t_current
         actual.ax_prev = actual.ax_current
