@@ -124,8 +124,7 @@ If you have any questions or feedback about YDPIbot, please contact us at abdall
 
 ## Future Work
 
-- Try gmapping instead of hector
-- Use last edit of the urdf file (rar downloaded)
+- Add documentries (video - frames.pdf)
 - Apply localizatin on gazebo simulation
 - Odometry (options: try the encoders as it is, kalman filter between imu and encoders)
 - Add reset odom service for the pose estimator
