@@ -387,7 +387,7 @@ class Node:
         t.t_current = time()
         t.delta_t = t.t_current - t.t_prev
 
-        actual.v_x += (actual.ax_current + actual.ax_prev) * t.delta_t / 2
+        actual.v_x += (actual.ax_current + actual.ax_prev) * t.delta_t
         
         t.t_prev = t.t_current
         actual.ax_prev = actual.ax_current
