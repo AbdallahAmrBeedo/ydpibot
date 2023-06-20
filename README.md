@@ -108,7 +108,6 @@ To install the YDPIbot package, follow these steps:
 4. Upload the code and connect the Arduino to the raspberry pi.
 
 ## Usage
----------------------------
 For using the robot hardware, just open a terminal on the Raspberry pi and run the following command:
 
 `roslaunch ydpibot_bringup robot.launch`
