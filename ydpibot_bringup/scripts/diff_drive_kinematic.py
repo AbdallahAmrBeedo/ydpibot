@@ -380,6 +380,7 @@ class Node:
         """
         if self.flag:
             rospy.loginfo("Sensors calibrated, Start!")
+            self.flag -= 1
         actual.w_z = - imu.angular_velocity.y
         actual.ax_current = imu.linear_acceleration.x
 
