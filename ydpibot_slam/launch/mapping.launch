@@ -4,9 +4,10 @@
 
     <arg name="geotiff_map_file_path" default="$(find hector_geotiff)/maps"/>
     <arg name="model" default="$(find ydpibot_description)/urdf/ydpibot_description.urdf"/>
-  
+    <arg name="sim" default="false"/>
+
     <param name="robot_description" command="cat $(arg model)" />
-    <param name="/use_sim_time" value="flase"/>
+    <param name="/use_sim_time" value="$(arg sim)"/>
 
 
     <node pkg="rviz" type="rviz" name="rviz"
@@ -15,11 +16,14 @@
     <node pkg ="tf" type="static_transform_publisher" name="world_to_map" args="0.0 0.0 0.0 0.0 0.0 0.0 /world /map 40"/>
     <node pkg ="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0.0 0.0 0.0 /map /odom 40"/>
     <node pkg ="tf" type="static_transform_publisher" name="odom_to_base_link" args="0.0 0.0 0 0 0.0 0.0 /odom /base_link 40"/>
-    <!-- <node
-    name="tf_footprint_base"
-    pkg="tf"
-    type="static_transform_publisher"
-    args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
+    
+    <group if="$(eval arg('sim') == true)">
+        <node
+        name="tf_footprint_base"
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 0 0 0 0 base_link base_footprint 40"/>
+    </group>
     
     <include file="$(find hector_mapping)/launch/mapping_default.launch"/>
 
