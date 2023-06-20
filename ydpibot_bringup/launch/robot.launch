@@ -3,7 +3,7 @@
     <arg name="AD0"       default="false"/>
     <arg name="PublishTF"       default="true"/>
     <arg name="UseCalibration"       default="true"/>
-    <arg name="CalibrationTimes"       default="750"/>
+    <arg name="CalibrationTimes"       default="1000"/>
     <arg name="UseFilter"       default="true"/>
     <arg name="FilterGain"       default="0.031"/>
     <arg name="AccelerationScale"       default="0"/>
