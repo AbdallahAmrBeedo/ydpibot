@@ -13,7 +13,7 @@
     <arg name="FrameID"       default="imu_link"/>
     <arg name="port"       default="/dev/ttyACM0"/>
 	
-    <node name="arduino_bringup" pkg="rosserial_arduino" type="serial_node.py" output="screen">
+    <node name="arduino_bringup" pkg="rosserial_arduino" type="serial_node.py">
         <param name="port" value="$(arg port)" />
     </node>
 

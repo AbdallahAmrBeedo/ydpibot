@@ -279,6 +279,8 @@ class Node:
         rospy.init_node("diff_drive_kinematic")
 
         rospy.on_shutdown(self.stopAll)
+
+        self.flag = 1
         
         self.robot = Robot()
 
@@ -289,6 +291,15 @@ class Node:
         self.motor_speeds = Int16MultiArray()
 
         t.t_prev = time()
+
+        # Parameters
+        rospy.loginfo("Parameters set")
+        rospy.loginfo(f"x: (kp: {PARAM.kp_x}, ki: {PARAM.ki_x}, kd: {PARAM.kd_x})")
+        rospy.loginfo(f"w: (kp: {PARAM.kp_w}, ki: {PARAM.ki_w}, kd: {PARAM.kd_w})")
+        rospy.loginfo(f"wheel_base: {PARAM.wheel_base} wheel_radius: {PARAM.wheel_radius}")
+        rospy.loginfo(f"max_speed: {PARAM.max_speed} min_speed: {PARAM.min_speed}")
+        rospy.loginfo(f"max_vx: {PARAM.max_vx} min_vx: {PARAM.min_vx}")
+        rospy.loginfo(f"max_wz: {PARAM.max_wz} min_wz: {PARAM.min_wz}")
 
         rospy.Subscriber("/cmd_vel", Twist, self.cmdvelCb)
         rospy.Subscriber("/imu", Imu, self.imuCb)
@@ -317,6 +328,9 @@ class Node:
         PARAM.kp_w = config['kp_w']
         PARAM.ki_w = config['ki_w']
         PARAM.kd_w = config['kd_w']
+        rospy.loginfo("Parameters changed")
+        rospy.loginfo(f"x: (kp: {PARAM.kp_x}, ki: {PARAM.ki_x}, kd: {PARAM.kd_x})")
+        rospy.loginfo(f"w: (kp: {PARAM.kp_w}, ki: {PARAM.ki_w}, kd: {PARAM.kd_w})")
         pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
         return config
 
@@ -342,6 +356,11 @@ class Node:
         PARAM.min_vx = config['min_vx']
         PARAM.max_wz = config['max_wz']
         PARAM.min_wz = config['min_wz']
+        rospy.loginfo("Parameters changed")
+        rospy.loginfo(f"wheel_base: {PARAM.wheel_base} wheel_radius: {PARAM.wheel_radius}")
+        rospy.loginfo(f"max_speed: {PARAM.max_speed} min_speed: {PARAM.min_speed}")
+        rospy.loginfo(f"max_vx: {PARAM.max_vx} min_vx: {PARAM.min_vx}")
+        rospy.loginfo(f"max_wz: {PARAM.max_wz} min_wz: {PARAM.min_wz}")
         return config
 
     def cmdvelCb(self,cmd) -> None:
@@ -359,6 +378,8 @@ class Node:
         Args:
             imu (sensor_msgs/Imu): sensor message containing linear accelerations and angular velocities
         """
+        if self.flag:
+            rospy.loginfo("Sensors calibrated, Start!")
         actual.w_z = - imu.angular_velocity.y
         actual.ax_current = imu.linear_acceleration.x
 
