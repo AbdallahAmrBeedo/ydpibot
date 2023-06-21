@@ -15,11 +15,15 @@
   
 
   <node pkg ="tf" type="static_transform_publisher" name="laser_to_base_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_scan /laser_frame 40"/>
-  <node pkg ="tf" type="static_transform_publisher" name="base_footprint_to_base_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_footprint /base_scan 40"/>
+  <!-- <node pkg ="tf" type="static_transform_publisher" name="base_footprint_to_base_scan" args="-0.039725 0 0.04948 0.0 0.0 0.0 /base_footprint /base_scan 40"/> -->
     
 
 <param name="robot_description" command="cat '$(find ydpibot_description)/urdf/ydpibot_description.urdf'" />
-    
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+  </node>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+  </node>
     <arg name="x" default="0"/>
     <arg name="y" default="0"/>
     <arg name="z" default="0"/>
