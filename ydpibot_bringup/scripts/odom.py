@@ -41,6 +41,7 @@ class Measured:
     d_right = 0     # d_r = 2 * R * pi * right_ticks / resolution
     d_left = 0      # d_l = 2 * R * pi * left_ticks / resolution
     d_center = 0    # d_c = (d_r + d_l)/ 2
+    yaw_prev = 0
     yaw = 0         # yaw = (d_r - d_l) / Wheel_base
     x = 0           # x = d_c * cos(yaw)
     y = 0           # y = d_c * sin(yaw) 
@@ -63,27 +64,26 @@ class Node:
         self.odom = Odometry()
         self.odom_publisher = rospy.Publisher("/odom", Odometry, queue_size=5)
 
-        while not rospy.is_shutdown:
+        t.t_prev = time()
+
+        while not rospy.is_shutdown():
             rospy.Subscriber("/right_ticks", Int16, self.right_distance)
             rospy.Subscriber("/left_ticks", Int16, self.left_distance)
             rospy.Subscriber("/initial_pose", PoseWithCovarianceStamped, self.set_init_pose)
             self.calc_odom()
             self.publish_odom()
             self.rate.sleep()
-            rospy.spin()
 
         
     def right_distance(self, ticks) -> None:
         """
         """
         current_ticks.right = ticks.data
-        measurments.d_right = (current_ticks.right - prev_ticks.right) * 2 * pi * PARAM.wheel_radius / PARAM.encoder_resolution
 
     def left_distance(self, ticks) -> None:
         """
         """
         current_ticks.left = ticks.data
-        measurments.d_left = (current_ticks.left - prev_ticks.left) * 2 * pi * PARAM.wheel_radius / PARAM.encoder_resolution
 
     def set_init_pose(self,init) -> None:
         """
@@ -96,6 +96,15 @@ class Node:
     def calc_odom(self) -> None:
         """
         """
+        t.t_current = time()
+        t.delta_t = t.t_current - t.t_prev
+
+        measurments.d_left = (current_ticks.left - prev_ticks.left) * 2 * pi * PARAM.wheel_radius / PARAM.encoder_resolution
+        measurments.d_right = (current_ticks.right - prev_ticks.right) * 2 * pi * PARAM.wheel_radius / PARAM.encoder_resolution
+        
+        prev_ticks.left = current_ticks.left
+        prev_ticks.right = current_ticks.right
+
         measurments.d_center = (measurments.d_left + measurments.d_right) / 2
         measurments.yaw += (measurments.d_right - measurments.d_left) / PARAM.wheel_base
         
@@ -107,12 +116,13 @@ class Node:
         measurments.x += measurments.d_center * cos(measurments.yaw)
         measurments.y += measurments.d_center * sin(measurments.yaw)
 
-        t.t_current = time()
-        t.delta_t = t.t_current - t.t_prev
-
         measurments.v = measurments.d_center / t.delta_t
-        measurments.v = measurments.yaw / t.delta_t
+        measurments.w = (measurments.yaw - measurments.yaw_prev) / t.delta_t
 
+        measurments.yaw_prev = measurments.yaw
+
+        t.t_prev = t.t_current
+    
     def publish_odom(self) -> None:
         """
         """
@@ -133,3 +143,6 @@ class Node:
         self.odom.twist.twist.angular.z = measurments.w
 
         self.odom_publisher.publish(self.odom)
+
+if __name__ == "__main__":
+    Node()
