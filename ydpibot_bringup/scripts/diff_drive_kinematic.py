@@ -280,7 +280,9 @@ class Node:
         rospy.on_shutdown(self.stopAll)
 
         self.flag = 1
-        
+        self.flag_pid = 1
+        self.flag_robot = 1
+
         self.robot = Robot()
 
         srvpid = Server(pidConfig, self.set_pid_param_callback, "pid")
@@ -330,6 +332,7 @@ class Node:
         rospy.loginfo("Parameters changed")
         rospy.loginfo(f"x: (kp: {PARAM.kp_x}, ki: {PARAM.ki_x}, kd: {PARAM.kd_x})")
         rospy.loginfo(f"w: (kp: {PARAM.kp_w}, ki: {PARAM.ki_w}, kd: {PARAM.kd_w})")
+        rospy.loginfo(f"level: {level}")
         pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
         return config
 
@@ -360,6 +363,7 @@ class Node:
         rospy.loginfo(f"max_speed: {PARAM.max_speed} min_speed: {PARAM.min_speed}")
         rospy.loginfo(f"max_vx: {PARAM.max_vx} min_vx: {PARAM.min_vx}")
         rospy.loginfo(f"max_wz: {PARAM.max_wz} min_wz: {PARAM.min_wz}")
+        rospy.loginfo(f"level: {level}")
         return config
 
     def cmdvelCb(self,cmd) -> None:
@@ -381,7 +385,7 @@ class Node:
             rospy.loginfo("Sensors calibrated, Start!")
             self.flag -= 1
         actual.w_z = - imu.angular_velocity.y
-        actual.ax_current = imu.linear_acceleration.x * PARAM.alpha + (1 - PARAM.alpha) * actual.ax_prev
+        actual.ax_current = imu.linear_acceleration.x
 
         t.t_current = time()
         t.delta_t = t.t_current - t.t_prev
