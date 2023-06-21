@@ -36,7 +36,7 @@
 #include <Wire.h>
 #include <ros/time.h>
 #include <std_msgs/Int16MultiArray.h>
-#include <nav_msgs/Odometry.h>
+#include <std_msgs/Int64.h>
 
 ros::NodeHandle nh;
 
@@ -79,6 +79,11 @@ void motorsCb(const std_msgs::Int16MultiArray& PWM){
 
 ros::Subscriber<std_msgs::Int16MultiArray> motors("/motor_speeds", &motorsCb);
 
+std_msgs::Int64 right_ticks;
+ros::Publisher right_Wheel("/right_ticks", &right_ticks);
+std_msgs::Int64 left_ticks;
+ros::Publisher left_Wheel("/left_ticks", &left_ticks);
+
 void setup() 
 {
   attachInterrupt(digitalPinToInterrupt(19),pub_Rturns,RISING);
@@ -94,13 +99,15 @@ void loop()
 }
 
 void pub_Rturns(){
-//  if (Dir_r == FORWARD) Rturns.data += 1;
-//  else if (Dir_r == BACKWARD) Rturns.data -= 1;
+  if (Dir_r == FORWARD) right_ticks.data += 1;
+  else if (Dir_r == BACKWARD) right_ticks.data -= 1;
+  right_wheel.publish(&right_ticks);
   }
 
 void pub_Lturns(){
-//  if (Dir_l == FORWARD) Lturns.data += 1;
-//  else if (Dir_l == BACKWARD) Lturns.data -= 1;
+  if (Dir_l == FORWARD) left_ticks.data += 1;
+  else if (Dir_l == BACKWARD) left_ticks.data -= 1;
+  left_wheel.publish(&left_ticks);
   }
 
 void odom(){
