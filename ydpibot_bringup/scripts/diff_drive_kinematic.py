@@ -314,7 +314,7 @@ class Node:
             config: the list of the paramter conigured with the new values coming from the server
             level: indication if the values are not changed yet
         """
-        if not level:
+        if level != 1:
             config['kp_x'] = PARAM.kp_x
             config['ki_x'] = PARAM.ki_x
             config['kd_x'] = PARAM.kd_x
@@ -332,7 +332,6 @@ class Node:
         rospy.loginfo("Parameters changed")
         rospy.loginfo(f"x: (kp: {PARAM.kp_x}, ki: {PARAM.ki_x}, kd: {PARAM.kd_x})")
         rospy.loginfo(f"w: (kp: {PARAM.kp_w}, ki: {PARAM.ki_w}, kd: {PARAM.kd_w})")
-        rospy.loginfo(f"level: {level}")
         pid_wz.set_pid(PARAM.kp_w, PARAM.ki_w, PARAM.kd_w)
         return config
 
@@ -344,7 +343,7 @@ class Node:
             config: the list of the paramter conigured with the new values coming from the server
             level: indication if the values are not changed yet
         """
-        if not level:
+        if level != 1:
             config['max_speed'] = PARAM.max_speed
             config['min_speed'] = PARAM.min_speed
             config['max_vx'] = PARAM.max_vx
@@ -363,7 +362,6 @@ class Node:
         rospy.loginfo(f"max_speed: {PARAM.max_speed} min_speed: {PARAM.min_speed}")
         rospy.loginfo(f"max_vx: {PARAM.max_vx} min_vx: {PARAM.min_vx}")
         rospy.loginfo(f"max_wz: {PARAM.max_wz} min_wz: {PARAM.min_wz}")
-        rospy.loginfo(f"level: {level}")
         return config
 
     def cmdvelCb(self,cmd) -> None:
