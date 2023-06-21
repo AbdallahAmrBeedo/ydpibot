@@ -9,3 +9,5 @@ min_vx: -0.5
 
 max_wz: 1
 min_wz: -1
+
+encoder_resolution: 20

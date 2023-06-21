@@ -274,7 +274,10 @@ class Robot:
 
 class Node:
     def __init__(self) -> None:
-        """Initialize node which subscribes to /cmd_vel topic and the /imu and publishes on the /motor_speeds topic"""
+        """
+        Initialize node which subscribes to /cmd_vel topic and the /imu and publishes on the 
+        /motor_speeds topic
+        """
         rospy.init_node("diff_drive_kinematic")
 
         rospy.on_shutdown(self.stopAll)
