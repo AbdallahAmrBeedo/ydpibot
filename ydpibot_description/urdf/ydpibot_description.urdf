@@ -6,20 +6,6 @@
   name="ydpibot_description">
   <link
     name="base_link">
-    <inertial>
-      <origin
-        xyz="-0.0093884 -5.5511E-17 0.047189"
-        rpy="0 0 0" />
-      <mass
-        value="1.11353" />
-      <inertia
-        ixx="0.1002007"
-        ixy="-4.5965E-19"
-        ixz="-9.7266E-06"
-        iyy="0.10030078"
-        iyz="1.1172E-20"
-        izz="0.20047883" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
