@@ -54,6 +54,22 @@
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
   <link
+    name="base_footprint">
+  </link>
+  <joint
+    name="base_footprint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_footprint" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
     name="Upper_base">
     <inertial>
       <origin
@@ -434,10 +450,10 @@
     name="base_scan_joint"
     type="fixed">
     <origin
-      xyz="-0.039725 0 0.04948"
+      xyz="-0.039725 0 0.13948"
       rpy="0 0 0" />
     <parent
-      link="Upper_base" />
+      link="base_footprint" />
     <child
       link="base_scan" />
     <axis
