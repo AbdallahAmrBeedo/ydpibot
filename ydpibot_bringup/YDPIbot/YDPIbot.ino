@@ -33,10 +33,9 @@
 
 #include <AFMotor.h>
 #include <ros.h>
-#include <Wire.h>
 #include <ros/time.h>
 #include <std_msgs/Int16MultiArray.h>
-#include <std_msgs/Int64.h>
+#include <std_msgs/Int16.h>
 
 ros::NodeHandle nh;
 
@@ -79,15 +78,15 @@ void motorsCb(const std_msgs::Int16MultiArray& PWM){
 
 ros::Subscriber<std_msgs::Int16MultiArray> motors("/motor_speeds", &motorsCb);
 
-std_msgs::Int64 right_ticks;
+std_msgs::Int16 right_ticks;
 ros::Publisher right_wheel("/right_ticks", &right_ticks);
-std_msgs::Int64 left_ticks;
+std_msgs::Int16 left_ticks;
 ros::Publisher left_wheel("/left_ticks", &left_ticks);
 
 void setup() 
 {
-  attachInterrupt(digitalPinToInterrupt(19),pub_Rturns,RISING);
-  attachInterrupt(digitalPinToInterrupt(18),pub_Lturns,FALLING);
+  attachInterrupt(digitalPinToInterrupt(18),pub_Rturns,RISING);
+  attachInterrupt(digitalPinToInterrupt(19),pub_Lturns,RISING);
   nh.initNode();
   nh.advertise(right_wheel);
   nh.advertise(left_wheel);
@@ -100,7 +99,7 @@ void loop()
   delay(1);
 }
 
-void pub_Rturns(){
+void pub_Rturns(){  
   if (Dir_r == FORWARD) right_ticks.data += 1;
   else if (Dir_r == BACKWARD) right_ticks.data -= 1;
   right_wheel.publish(&right_ticks);

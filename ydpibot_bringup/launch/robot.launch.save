@@ -1,0 +1,43 @@
+<launch>
+    <remap from="/imu/data" to="/imu"/>
+    <arg name="AD0"       default="false"/>
+    <arg name="PublishTF"       default="true"/>
+    <arg name="UseCalibration"       default="true"/>
+    <arg name="CalibrationTimes"       default="1000"/>
+    <arg name="UseFilter"       default="true"/>
+    <arg name="FilterGain"       default="0.031"/>
+    <arg name="AccelerationScale"       default="0"/>
+    <arg name="GyroScale"       default="0"/>
+    <arg name="Hz"       default="10"/>
+    <arg name="ParentsframeID"       default="base_link"/>
+    <arg name="FrameID"       default="imu_link"/>
+    <arg name="port"       default="/dev/ttyACM0"/>
+	
+    <node name="arduino_bringup" pkg="rosserial_arduino" type="serial_node.py" output="screen">
+        <param name="port" value="$(arg port)" />
+    </node>
+
+    <rosparam file="$(find ydpibot_bringup)/param/pid.yaml" command="load" ns="pid"/>
+    <rosparam file="$(find ydpibot_bringup)/param/robot.yaml" command="load" ns="robot"/>
+
+    <node name="differential_drive_kinematic" pkg="ydpibot_bringup" type="diff_drive_kinematic.py" output="screen">
+    </node>
+
+    <include file="$(find ydlidar)/launch/lidar.launch"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4" args="0.0 0.0 0.0 0.0 0.0 1.57 /base_link /base_scan 40" /> 
+  <node pkg ="tf" type="static_transform_publisher" name="laser_to_map" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_scan /base_footprint 40"/>
+  <node pkg="mpu6050" type="mpu6050_node" name="mpu6050_node" respawn="true">
+    <param name="AD0" type="bool" value="$(arg AD0)" />
+    <param name="PublishTF" type="bool" value="$(arg PublishTF)" />
+    <param name="UseCalibration" type="bool" value="$(arg UseCalibration)" />
+    <param name="CalibrationTimes" type="int" value="$(arg CalibrationTimes)" />
+    <param name="UseFilter" type="bool" value="$(arg UseFilter)" />
+    <param name="FilterGain" type="double" value="$(arg FilterGain)" />
+    <param name="AccelerationScale" type="int" value="$(arg AccelerationScale)" />
+    <param name="GyroScale" type="int" value="$(arg GyroScale)" />
+    <param name="Hz" type="int" value="$(arg Hz)" />
+    <param name="ParentsframeID" type="string" value="$(arg ParentsframeID)" />
+    <param name="FrameID" type="string" value="$(arg FrameID)" />
+  </node>
+
+</launch>
