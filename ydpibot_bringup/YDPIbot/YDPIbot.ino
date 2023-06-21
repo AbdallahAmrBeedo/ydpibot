@@ -80,15 +80,17 @@ void motorsCb(const std_msgs::Int16MultiArray& PWM){
 ros::Subscriber<std_msgs::Int16MultiArray> motors("/motor_speeds", &motorsCb);
 
 std_msgs::Int64 right_ticks;
-ros::Publisher right_Wheel("/right_ticks", &right_ticks);
+ros::Publisher right_wheel("/right_ticks", &right_ticks);
 std_msgs::Int64 left_ticks;
-ros::Publisher left_Wheel("/left_ticks", &left_ticks);
+ros::Publisher left_wheel("/left_ticks", &left_ticks);
 
 void setup() 
 {
   attachInterrupt(digitalPinToInterrupt(19),pub_Rturns,RISING);
   attachInterrupt(digitalPinToInterrupt(18),pub_Lturns,FALLING);
   nh.initNode();
+  nh.advertise(right_wheel);
+  nh.advertise(left_wheel);
   nh.subscribe(motors);
 }
 
