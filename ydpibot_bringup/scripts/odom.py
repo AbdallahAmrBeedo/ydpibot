@@ -62,7 +62,7 @@ class Node:
 
         self.rate = rospy.Rate(10)
         self.odom = Odometry()
-        self.odom_publisher = rospy.Publisher("/odom", Odometry, queue_size=5)
+        self.odom_publisher = rospy.Publisher("/wheel_odom", Odometry, queue_size=5)
 
         t.t_prev = time()
 
@@ -142,6 +142,14 @@ class Node:
         self.odom.twist.twist.linear.x = measurments.v
         self.odom.twist.twist.angular.z = measurments.w
 
+        for i in range(36):
+            if i == 0 or i == 7 or i == 14:
+                self.odom.pose.covariance[i] = 0.01
+            elif i == 21 or i == 28 or i == 35:
+                self.odom.pose.covariance[i] += 0.1
+            else:
+                self.odom.pose.covariance[i] = 0
+    
         self.odom_publisher.publish(self.odom)
 
 if __name__ == "__main__":

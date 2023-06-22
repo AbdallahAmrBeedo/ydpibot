@@ -24,6 +24,8 @@
 
     <include file="$(find ydlidar)/launch/lidar.launch"/>
 
+  <node pkg="ydpibot_bringup" name="wheel_odom" type="odom.py"/>
+  
   <node pkg="mpu6050" type="mpu6050_node" name="mpu6050_node" respawn="true">
     <param name="AD0" type="bool" value="$(arg AD0)" />
     <param name="PublishTF" type="bool" value="$(arg PublishTF)" />
@@ -36,6 +38,20 @@
     <param name="Hz" type="int" value="$(arg Hz)" />
     <param name="ParentsframeID" type="string" value="$(arg ParentsframeID)" />
     <param name="FrameID" type="string" value="$(arg FrameID)" />
+  </node>
+  
+  <remap from="/imu_data" to="/imu/data"/>
+  <remap from="/odom" to="/wheel_odom"/>
+  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="odom"/>
+    <param name="base_footprint_frame" value="base_footprint"/>
+    <param name="freq" value="30.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="true"/>
+    <param name="vo_used" value="false"/>
+    <param name="debug" value="false"/>
+    <param name="self_diagnose" value="false"/>
   </node>
 
 <param name="robot_description" command="cat '$(find ydpibot_description)/urdf/ydpibot_description.urdf'" />
