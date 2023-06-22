@@ -18,7 +18,7 @@ Usage:
 
 Subscribed Topics:
     /cmd_vel (geometry_msgs/Twist)
-    /imu (sensor_msgs/Imu)
+    /imu/data (sensor_msgs/Imu)
 
 Published Topics:
     /motor_speeds (std_msgs/Int16MultiArray)
@@ -306,7 +306,7 @@ class Node:
         rospy.loginfo(f"max_wz: {PARAM.max_wz} min_wz: {PARAM.min_wz}")
 
         rospy.Subscriber("/cmd_vel", Twist, self.cmdvelCb)
-        rospy.Subscriber("/imu", Imu, self.imuCb)
+        rospy.Subscriber("/imu/data", Imu, self.imuCb)
         rospy.spin()
     
     def set_pid_param_callback(self, config, level):

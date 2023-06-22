@@ -1,5 +1,4 @@
 <launch>
-    <remap from="/imu/data" to="/imu"/>
     <arg name="AD0"       default="false"/>
     <arg name="PublishTF"       default="true"/>
     <arg name="UseCalibration"       default="true"/>
