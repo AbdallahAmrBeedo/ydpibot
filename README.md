@@ -42,6 +42,10 @@ To use YDPIbot, you will need to install the following dependencies:
 - [ROS Noetic](http://wiki.ros.org/noetic/Installation) - the ubiquity robotics image have ROS noetic already-
 - [YDLidar pkg](https://github.com/PinkWink/ydlidar)
 - [MPU6050](https://github.com/PigeonSensei/pigeon_imu_driver/tree/master/mpu6050)
+- Robot Pose EKF
+- Hector Mapping
+- Rosserial
+- 
 
 ---------------------------
 ### Installing Ubuntu20.04 on Raspberry PI
