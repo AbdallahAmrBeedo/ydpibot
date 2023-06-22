@@ -14,28 +14,28 @@
   </include>
   
 
-  <node pkg ="tf" type="static_transform_publisher" name="/ydpibot/laser_to_base_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_scan /laser_frame 40"/>
+  <node pkg ="tf" type="static_transform_publisher" name="laser_to_base_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_scan /laser_frame 40"/>
   <!-- <node pkg ="tf" type="static_transform_publisher" name="base_footprint_to_base_scan" args="-0.039725 0 0.04948 0.0 0.0 0.0 /base_footprint /base_scan 40"/> -->
     
 
 <param name="robot_description" command="cat '$(find ydpibot_description)/urdf/ydpibot_description.urdf'" />
   
-  <node name="/ydpibot/robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
   <param name="use_tf_static" value="false"/>
   </node>
-  <node name="/ydpibot/joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
   </node>
     <arg name="x" default="0"/>
     <arg name="y" default="0"/>
     <arg name="z" default="0"/>
     
-    <node name="/ydpibot/spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+    <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
           args="-urdf -param robot_description -model mybot -x $(arg x) -y $(arg y) -z $(arg z)" />
 
     <rosparam file="$(find ydpibot_description)/config/ydpibot_drive.yaml" command="load" />
 
 
-    <node name="/ydpibot/controller_manager" pkg="controller_manager" type="spawner"
+    <node name="controller_manager" pkg="controller_manager" type="spawner"
           respawn="false" output="screen" args="mobile_base_controller" />
 
 
