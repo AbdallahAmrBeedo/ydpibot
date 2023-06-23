@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- <remap from="/robot_pose_ekf/odom_combined" to="/odom"/>    -->
+
+  <arg name="map_file" default="/home/beedo/catkin_workspace/src/ydpibot/ydpibot_navigation/map/room.yaml"/>
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ydpibot_navigation)/rviz/nav_config.rviz"/>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" >
+  </node>
+
+  <include file="$(find ydpibot_navigation)/launch/amcl.launch" />
+  <include file="$(find ydpibot_navigation)/launch/move_base.launch" /> 
+  
+</launch>
