@@ -64,6 +64,14 @@ class Node:
         self.odom = Odometry()
         self.odom_publisher = rospy.Publisher("/wheel_odom", Odometry, queue_size=5)
 
+        for i in range(36):
+            if i == 0 or i == 7 or i == 14:
+                self.odom.pose.covariance[i] = 0.01
+            elif i == 21 or i == 28 or i == 35:
+                self.odom.pose.covariance[i] = 0.1
+            else:
+                self.odom.pose.covariance[i] = 0
+
         t.t_prev = time()
 
         while not rospy.is_shutdown():
@@ -79,12 +87,18 @@ class Node:
         """
         """
         current_ticks.right = ticks.data
+        for i in range(36):
+            if i == 21 or i == 28 or i == 35:
+                self.odom.pose.covariance[i] += 0.01
 
     def left_distance(self, ticks) -> None:
         """
         """
         current_ticks.left = ticks.data
-
+        for i in range(36):
+            if i == 21 or i == 28 or i == 35:
+                self.odom.pose.covariance[i] += 0.01
+            
     def set_init_pose(self,init) -> None:
         """
         """
@@ -141,14 +155,6 @@ class Node:
 
         self.odom.twist.twist.linear.x = measurments.v
         self.odom.twist.twist.angular.z = measurments.w
-
-        for i in range(36):
-            if i == 0 or i == 7 or i == 14:
-                self.odom.pose.covariance[i] = 0.01
-            elif i == 21 or i == 28 or i == 35:
-                self.odom.pose.covariance[i] += 0.1
-            else:
-                self.odom.pose.covariance[i] = 0
     
         self.odom_publisher.publish(self.odom)
 
