@@ -10,7 +10,7 @@ from std_msgs.msg import Int16
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
-
+from threading import Thread
 
 @dataclasses.dataclass
 class Param:
@@ -60,7 +60,7 @@ class Node:
         """
         rospy.init_node("Wheel_Odometry")
 
-        self.rate = rospy.Rate(100)
+        self.rate = rospy.Rate(30)
         self.odom = Odometry()
         self.odom_publisher = rospy.Publisher("/wheel_odom", Odometry, queue_size=5)
 
@@ -68,20 +68,21 @@ class Node:
             if i == 0 or i == 7 or i == 14:
                 self.odom.pose.covariance[i] = 0.01
             elif i == 21 or i == 28 or i == 35:
-                self.odom.pose.covariance[i] = 0.1
+                self.odom.pose.covariance[i] = 0.01
             else:
                 self.odom.pose.covariance[i] = 0
 
         t.t_prev = time()
+        
+        Thread(target=self.subscribers).start()
+        Thread(target=self.publish_odom).start()
 
-        while not rospy.is_shutdown():
-            rospy.Subscriber("/right_ticks", Int16, self.right_distance)
-            rospy.Subscriber("/left_ticks", Int16, self.left_distance)
-            rospy.Subscriber("/initial_pose", PoseWithCovarianceStamped, self.set_init_pose)
-            self.calc_odom()
-            self.publish_odom()
-            self.rate.sleep()
-
+    
+    def subscribers(self):
+        rospy.Subscriber("/right_ticks", Int16, self.right_distance)
+        rospy.Subscriber("/left_ticks", Int16, self.left_distance)
+        rospy.Subscriber("/initial_pose", PoseWithCovarianceStamped, self.set_init_pose)
+        rospy.spin()
         
     def right_distance(self, ticks) -> None:
         """
@@ -105,6 +106,9 @@ class Node:
         measurments.y  -= init.pose.pose.position.y
         euler = euler_from_quaternion(init.pose.pose.orientation.x, init.pose.pose.orientation.y, init.pose.pose.orientation.z, init.pose.pose.orientation.w)
         measurments.yaw -= euler[2]
+        self.odom.pose.covariance[21] = 0.01
+        self.odom.pose.covariance[28] += 0.01
+        self.odom.pose.covariance[35] = 0.01
         
     def calc_odom(self) -> None:
         """
@@ -141,21 +145,28 @@ class Node:
         """
         self.odom.header.frame_id = "odom"
         self.odom.child_frame_id = "base_link"
-        self.odom.header.stamp = rospy.Time.now()
-        self.odom.pose.pose.position.x = measurments.x
-        self.odom.pose.pose.position.y = measurments.y
-        self.odom.pose.pose.position.z = 0
-        
-        quat = quaternion_from_euler(0,0,measurments.yaw)
-        self.odom.pose.pose.orientation.x = quat[0]
-        self.odom.pose.pose.orientation.y = quat[1]
-        self.odom.pose.pose.orientation.z = quat[2]
-        self.odom.pose.pose.orientation.w = quat[3]
 
-        self.odom.twist.twist.linear.x = measurments.v
-        self.odom.twist.twist.angular.z = measurments.w
-    
-        self.odom_publisher.publish(self.odom)
+        while not rospy.is_shutdown():
+
+            self.calc_odom()
+
+            self.odom.header.stamp = rospy.Time.now()
+            self.odom.pose.pose.position.x = measurments.x
+            self.odom.pose.pose.position.y = measurments.y
+            self.odom.pose.pose.position.z = 0
+            
+            quat = quaternion_from_euler(0,0,measurments.yaw)
+            self.odom.pose.pose.orientation.x = quat[0]
+            self.odom.pose.pose.orientation.y = quat[1]
+            self.odom.pose.pose.orientation.z = quat[2]
+            self.odom.pose.pose.orientation.w = quat[3]
+
+            self.odom.twist.twist.linear.x = measurments.v
+            self.odom.twist.twist.angular.z = measurments.w
+        
+            self.odom_publisher.publish(self.odom)
+            
+            self.rate.sleep()
 
 if __name__ == "__main__":
     Node()
