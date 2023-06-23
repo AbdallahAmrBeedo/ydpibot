@@ -104,7 +104,7 @@ class Node:
         """
         measurments.x  -= init.pose.pose.position.x
         measurments.y  -= init.pose.pose.position.y
-        euler = euler_from_quaternion(init.pose.pose.orientation.x, init.pose.pose.orientation.y, init.pose.pose.orientation.z, init.pose.pose.orientation.w)
+        euler = euler_from_quaternion([init.pose.pose.orientation.x, init.pose.pose.orientation.y, init.pose.pose.orientation.z, init.pose.pose.orientation.w])
         measurments.yaw -= euler[2]
         self.odom.pose.covariance[21] = 0.01
         self.odom.pose.covariance[28] += 0.01
