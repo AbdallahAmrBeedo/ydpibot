@@ -87,17 +87,16 @@ class Node:
         """
         """
         current_ticks.right = ticks.data
-        for i in range(36):
-            if i == 21 or i == 28 or i == 35:
-                self.odom.pose.covariance[i] += 0.01
+        self.odom.pose.covariance[21] += 0.01
+        self.odom.pose.covariance[28] += 0.01
+
 
     def left_distance(self, ticks) -> None:
         """
         """
         current_ticks.left = ticks.data
-        for i in range(36):
-            if i == 21 or i == 28 or i == 35:
-                self.odom.pose.covariance[i] += 0.01
+        self.odom.pose.covariance[21] += 0.01
+        self.odom.pose.covariance[35] += 0.01
             
     def set_init_pose(self,init) -> None:
         """
