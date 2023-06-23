@@ -81,7 +81,7 @@ class Node:
     def subscribers(self):
         rospy.Subscriber("/right_ticks", Int16, self.right_distance)
         rospy.Subscriber("/left_ticks", Int16, self.left_distance)
-        rospy.Subscriber("/initial_pose", PoseWithCovarianceStamped, self.set_init_pose)
+        rospy.Subscriber("/initialpose", PoseWithCovarianceStamped, self.set_init_pose)
         rospy.spin()
         
     def right_distance(self, ticks) -> None:
