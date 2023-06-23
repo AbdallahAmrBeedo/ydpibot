@@ -60,7 +60,7 @@ class Node:
         """
         rospy.init_node("Wheel_Odometry")
 
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(100)
         self.odom = Odometry()
         self.odom_publisher = rospy.Publisher("/wheel_odom", Odometry, queue_size=5)
 
