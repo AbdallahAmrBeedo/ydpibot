@@ -64,6 +64,8 @@ class Node:
         self.odom = Odometry()
         self.odom_publisher = rospy.Publisher("/wheel_odom", Odometry, queue_size=5)
 
+        transform = tf.TransformBroadcaster()
+
         for i in range(36):
             if i == 0 or i == 7 or i == 14:
                 self.odom.pose.covariance[i] = 0.01
