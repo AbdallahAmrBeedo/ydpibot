@@ -8,7 +8,7 @@
     <arg name="AccelerationScale"       default="0"/>
     <arg name="GyroScale"       default="0"/>
     <arg name="Hz"       default="10"/>
-    <arg name="ParentsframeID"       default="base_link"/>
+    <arg name="ParentsframeID"       default="IMU"/>
     <arg name="FrameID"       default="imu_link"/>
     <arg name="port"       default="/dev/ttyACM0"/>
 	
