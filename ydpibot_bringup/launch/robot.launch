@@ -8,7 +8,7 @@
     <arg name="AccelerationScale"       default="0"/>
     <arg name="GyroScale"       default="0"/>
     <arg name="Hz"       default="10"/>
-    <arg name="ParentsframeID"       default="IMU"/>
+    <arg name="ParentsframeID"       default="base_link"/>
     <arg name="FrameID"       default="imu_link"/>
     <arg name="port"       default="/dev/ttyACM0"/>
 	
@@ -44,7 +44,7 @@
   <remap from="/odom" to="/wheel_odom"/>
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom_combined"/>
-    <param name="base_footprint_frame" value="base"/>
+    <param name="base_footprint_frame" value="base_link"/>
     <param name="freq" value="10.0"/>
     <param name="sensor_timeout" value="1.0"/>
     <param name="odom_used" value="true"/>
