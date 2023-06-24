@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <!-- <remap from="/robot_pose_ekf/odom_combined" to="/odom"/>    -->
+  <remap from="/robot_pose_ekf/odom_combined" to="/odom"/>   
 
   <arg name="map_file" default="/home/beedo/catkin_workspace/src/ydpibot/ydpibot_navigation/map/room.yaml"/>
   
