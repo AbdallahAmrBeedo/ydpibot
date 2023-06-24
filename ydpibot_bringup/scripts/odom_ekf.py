@@ -18,8 +18,13 @@ class Node:
         """
         rospy.init_node("OdometryEKF_correction")
 
-        self.odom = PoseWithCovarianceStamped()
-        self.odom_publisher = rospy.Publisher("/odom", PoseWithCovarianceStamped, queue_size=5)
+        self.x_old = 0
+        self.y_old = 0
+        self.yaw_old = 0
+        self.t_old = time()
+
+        self.odom = Odometry()
+        self.odom_publisher = rospy.Publisher("/odom", Odometry, queue_size=5)
 
         self.transform = tf.TransformBroadcaster()
 
@@ -47,15 +52,32 @@ class Node:
         self.odom.pose.pose.orientation.z = quat[2]
         self.odom.pose.pose.orientation.w = quat[3]
 
+        t = time()
+
+        v_x = (x - self.x_old)/(t - self.t_old)
+        v_y = (y - self.y_old)/(t - self.t_old)        
+        w_z = (yaw - self.yaw_old)/(t - self.t_old)        
+
+        self.odom.twist.twist.linear.x = v_x
+        self.odom.twist.twist.linear.y = v_y
+        self.odom.twist.twist.angular.z = w_z
+
         self.odom_publisher.publish(self.odom)
 
+        self.x_old = x
+        self.y_old = y
+        self.yaw_old = yaw
+        self.t_old = t
+        
         self.transform.sendTransform(
             (x,y,0),
             (quat[0],quat[1],quat[2],quat[3]),
             rospy.Time.now(),
             "/base_link",
             "/odom"
-        )        
+        )
+
+
 
 if __name__ == "__main__":
     Node()
