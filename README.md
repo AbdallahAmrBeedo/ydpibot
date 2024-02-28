@@ -45,8 +45,6 @@ To use YDPIbot, you will need to install the following dependencies:
 - Robot Pose EKF
 - Hector Mapping
 - Rosserial
-- 
-
 ---------------------------
 ### Installing Ubuntu20.04 on Raspberry PI
 
