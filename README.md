@@ -147,7 +147,7 @@ We welcome contributions from other developers! If you would like to contribute 
 ---------------------------
 ## Credits
 
-YDPIbot was created by Abdallah Amr, Mostafa Osama, Tarek Shohdy, and Yomna Omar from Egypt-Japan University of Science andTechnology. We would like to acknowledge the following libraries and tools that were used in the development of this project:
+YDPIbot was created by Abdallah Amr, Mostafa Osama, Tarek Shohdy, and Yomna Omar from Egypt-Japan University of Science and Technology. We would like to acknowledge the following libraries and tools that were used in the development of this project:
 
 - [YDLidar SDK](https://www.ydlidar.com/products/view/5.html)
 - [Adafruit Motor Shield library](https://learn.adafruit.com/adafruit-motor-shield/library-install)
